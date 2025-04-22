@@ -9,7 +9,8 @@ public class Down implements KeyHandler {
 
     @Override
     public void perform(KeyEvent event, GameMap map) {
-        if (code.equals(event.getCode()))
+        if (code.equals(event.getCode()) && Util.checkIfValidMove(event, map)) {
             map.getPlayer().move(0, 1);
+        }
     }
 }
