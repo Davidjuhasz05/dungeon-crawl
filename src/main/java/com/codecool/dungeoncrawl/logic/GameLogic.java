@@ -31,10 +31,11 @@ public class GameLogic {
         for(Enemy enemy : map.getEnemies()) {
             int dx, dy;
             int movementRange = enemy.getMovementRange();
+            int retries = 0;
             do {
-                dx = random.nextInt((movementRange + 1) - (movementRange * -1)) + (movementRange * -1);
-                dy = random.nextInt((movementRange + 1) - (movementRange * -1)) + (movementRange * -1);
-            } while(!enemy.move(dx, dy));
+                dx = random.nextInt(2 * movementRange + 1) - movementRange;
+                dy = random.nextInt(2 * movementRange + 1) - movementRange;
+            } while(!enemy.move(dx, dy) && ++retries != 10);
         }
     }
 
