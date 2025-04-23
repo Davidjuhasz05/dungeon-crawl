@@ -24,4 +24,9 @@ public class Player extends Actor {
     public String getTileName() {
         return "player";
     }
+
+    public List<Item> getInventory(){
+        return this.inventory;
+    }
+
 }
