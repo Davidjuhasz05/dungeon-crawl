@@ -4,6 +4,9 @@ import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.item.Item;
 import java.util.List;
+import com.codecool.dungeoncrawl.data.actors.Enemy;
+
+import java.util.Random;
 
 public class GameLogic {
     private GameMap map;
@@ -21,6 +24,18 @@ public class GameLogic {
     }
 
     public void setup() {
+    }
+
+    public void moveEnemies() {
+        Random random = new Random();
+        for(Enemy enemy : map.getEnemies()) {
+            int dx, dy;
+            int movementRange = enemy.getMovementRange();
+            do {
+                dx = random.nextInt((movementRange + 1) - (movementRange * -1)) + (movementRange * -1);
+                dy = random.nextInt((movementRange + 1) - (movementRange * -1)) + (movementRange * -1);
+            } while(!enemy.move(dx, dy));
+        }
     }
 
     public Cell getCell(int x, int y) {

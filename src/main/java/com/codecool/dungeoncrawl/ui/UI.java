@@ -44,6 +44,7 @@ public class UI {
         for (KeyHandler keyHandler : keyHandlers) {
             keyHandler.perform(keyEvent, logic.getMap());
         }
+        logic.moveEnemies();
         refresh();
     }
 

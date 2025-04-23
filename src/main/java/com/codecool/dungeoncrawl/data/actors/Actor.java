@@ -6,17 +6,20 @@ import com.codecool.dungeoncrawl.data.Drawable;
 public abstract class Actor implements Drawable {
     private Cell cell;
     private int health = 10;
+    private final boolean isHostile;
 
-    public Actor(Cell cell) {
+    public Actor(Cell cell, boolean isHostile) {
         this.cell = cell;
         this.cell.setActor(this);
+        this.isHostile = isHostile;
     }
 
-    public void move(int dx, int dy) {
+    public boolean move(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
         cell.setActor(null);
         nextCell.setActor(this);
         cell = nextCell;
+        return true;
     }
 
     public int getHealth() {
@@ -34,4 +37,6 @@ public abstract class Actor implements Drawable {
     public int getY() {
         return cell.getY();
     }
+
+    public boolean isHostile() {return isHostile;}
 }
