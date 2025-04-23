@@ -29,7 +29,6 @@ public abstract class Item implements Drawable {
         return name;
     }
 
-
     public abstract boolean pickUp(Item item);
 
 }
