@@ -17,6 +17,19 @@ public abstract class Item implements Drawable {
         this.name = name;
     };
 
+    public Cell getCell() {
+        return cell;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+
     public abstract boolean pickUp(Item item);
 
 }
