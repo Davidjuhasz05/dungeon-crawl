@@ -4,5 +4,5 @@ import com.codecool.dungeoncrawl.data.GameMap;
 import javafx.scene.input.KeyEvent;
 
 public interface KeyHandler {
-    void perform(KeyEvent event, GameMap map);
+    boolean perform(KeyEvent event, GameMap map);
 }

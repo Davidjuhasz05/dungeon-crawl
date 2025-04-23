@@ -8,9 +8,11 @@ public class Left implements KeyHandler {
     public static final KeyCode code = KeyCode.LEFT;
 
     @Override
-    public void perform(KeyEvent event, GameMap map) {
+    public boolean perform(KeyEvent event, GameMap map) {
         if(code.equals(event.getCode())) {
             map.getPlayer().move(-1, 0);
+            return true;
         }
+        return false;
     }
 }
