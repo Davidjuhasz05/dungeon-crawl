@@ -42,9 +42,11 @@ public class UI {
 
     private void onKeyPressed(KeyEvent keyEvent) {
         for (KeyHandler keyHandler : keyHandlers) {
-            keyHandler.perform(keyEvent, logic.getMap());
+            boolean hasMoved = keyHandler.perform(keyEvent, logic.getMap());
+            if(hasMoved){
+                logic.moveEnemies();
+            }
         }
-        logic.moveEnemies();
         refresh();
     }
 

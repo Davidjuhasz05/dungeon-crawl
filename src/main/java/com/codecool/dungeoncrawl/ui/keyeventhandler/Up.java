@@ -8,9 +8,11 @@ public class Up implements KeyHandler {
     public static final KeyCode code = KeyCode.UP;
 
     @Override
-    public void perform(KeyEvent event, GameMap map) {
+    public boolean perform(KeyEvent event, GameMap map) {
         if(code.equals(event.getCode())) {
             map.getPlayer().move(0, -1);
+            return true;
         }
+        return false;
     }
 }
