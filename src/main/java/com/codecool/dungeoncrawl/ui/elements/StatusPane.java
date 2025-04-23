@@ -1,9 +1,12 @@
 package com.codecool.dungeoncrawl.ui.elements;
 
+import com.codecool.dungeoncrawl.data.item.Item;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+
+import java.util.List;
 
 public class StatusPane {
     public static final int RIGHT_PANEL_WIDTH = 200;
@@ -11,11 +14,15 @@ public class StatusPane {
     private GridPane ui;
     private Label healthTextLabel;
     private Label healthValueLabel;
+    private Label inventoryTextLabel;
+    private Label inventoryValueLabel;
 
     public StatusPane() {
         ui = new GridPane();
         healthTextLabel = new Label("Health: ");
         healthValueLabel = new Label();
+        inventoryTextLabel = new Label("Inventory: ");
+        inventoryValueLabel = new Label();
     }
 
     public BorderPane build() {
@@ -26,6 +33,9 @@ public class StatusPane {
         ui.add(healthTextLabel, 0, 0);
         ui.add(healthValueLabel, 1, 0);
 
+        ui.add(inventoryTextLabel, 0, 2);
+        ui.add(inventoryValueLabel, 0, 3);
+
         BorderPane borderPane = new BorderPane();
         borderPane.setRight(ui);
         return borderPane;
@@ -34,4 +44,18 @@ public class StatusPane {
     public void setHealthValue(String text) {
         healthValueLabel.setText(text);
     }
+
+    public void setInventoryValue(List<Item> inventory){
+        String inventoryItems = "";
+
+        for(Item item : inventory){
+            inventoryItems += item.getName() + ", ";
+        }
+
+        inventoryItems.toString();
+        inventoryValueLabel.setText(inventoryItems);
+    }
+
+
+
 }
