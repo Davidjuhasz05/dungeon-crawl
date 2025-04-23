@@ -8,11 +8,13 @@ public abstract class Item implements Drawable {
     private Cell cell;
     private ItemType itemType;
     private int value;
+    private String name;
 
-    public Item(Cell cell, ItemType itemType, int value){
+    public Item(Cell cell, ItemType itemType, int value, String name) {
         this.cell = cell;
         this.itemType = itemType;
         this.value = value;
+        this.name = name;
     };
 
     public abstract boolean pickUp(Item item);
