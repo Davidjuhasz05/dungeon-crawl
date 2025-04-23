@@ -14,11 +14,12 @@ public abstract class Actor implements Drawable {
         this.isHostile = isHostile;
     }
 
-    public void move(int dx, int dy) {
+    public boolean move(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
         cell.setActor(null);
         nextCell.setActor(this);
         cell = nextCell;
+        return true;
     }
 
     public int getHealth() {
