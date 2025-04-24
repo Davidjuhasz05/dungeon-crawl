@@ -1,18 +1,9 @@
 package com.codecool.dungeoncrawl.ui.keyeventhandler;
 
-import com.codecool.dungeoncrawl.data.GameMap;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
-public class Left implements KeyHandler {
-    public static final KeyCode code = KeyCode.LEFT;
-
-    @Override
-    public boolean perform(KeyEvent event, GameMap map) {
-        if(code.equals(event.getCode())) {
-            map.getPlayer().move(-1, 0);
-            return true;
-        }
-        return false;
+public class Left extends DirectionsKeyHandler {
+    public Left() {
+        super(KeyCode.LEFT, -1, 0);
     }
 }
