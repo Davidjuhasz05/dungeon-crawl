@@ -2,35 +2,49 @@ package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.item.Item;
+import com.codecool.dungeoncrawl.data.item.ItemType;
 
 public abstract class Enemy extends Actor {
-  protected int movementRange;
+    protected int movementRange;
 
-  public Enemy(Cell cell) {
-    super(cell, true);
-  }
-
-  @Override
-  public MoveResult evaluateMove(int dx, int dy) {
-    Cell nextCell = this.getCell().getNeighbor(dx, dy);
-
-    if (nextCell.getType().isBlocked()) return MoveResult.BLOCKED;
-
-    Actor target = nextCell.getActor();
-    Item targetItem = nextCell.getItem();
-
-    if (target == null && targetItem == null) {
-      return MoveResult.MOVE;
+    public Enemy(Cell cell) {
+        super(cell, true);
     }
 
-    if (target != null && !target.isHostile()) {
-      return MoveResult.ATTACK;
+    @Override
+    public MoveResult evaluateMove(int dx, int dy) {
+        Cell nextCell = this.getCell().getNeighbor(dx, dy);
+
+        if (nextCell.getType().isBlocked()) return MoveResult.BLOCKED;
+
+        Actor target = nextCell.getActor();
+        Item targetItem = nextCell.getItem();
+
+        if (target == null && targetItem == null) {
+            return MoveResult.MOVE;
+        }
+
+        if (target != null && !target.isHostile()) {
+            return MoveResult.ATTACK;
+        }
+
+        return MoveResult.BLOCKED;
     }
 
-    return MoveResult.BLOCKED;
-  }
+    public int getMovementRange() {
+        return movementRange;
+    }
 
-  public int getMovementRange() {
-    return movementRange;
-  }
+    @Override
+    public void attack(Actor target) {
+        Player player = (Player) target;
+        int defence = 0;
+        for (Item item : player.getInventory()) {
+            if (item.getItemType() == ItemType.ARMOR) {
+                defence += item.getValue();
+            }
+        }
+        int totalDamage = damage - defence;
+        super.attacking(target, totalDamage);
+    }
 }

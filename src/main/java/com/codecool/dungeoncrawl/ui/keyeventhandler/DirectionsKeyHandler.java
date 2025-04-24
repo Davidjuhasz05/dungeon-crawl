@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.ui.keyeventhandler;
 import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.actors.Actor;
 import com.codecool.dungeoncrawl.data.actors.MoveResult;
+import com.codecool.dungeoncrawl.data.actors.Player;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -23,7 +24,7 @@ public class DirectionsKeyHandler implements KeyHandler {
             return false;
         }
 
-        Actor player = map.getPlayer();
+        Player player = map.getPlayer();
         MoveResult moveResult = player.evaluateMove(dx, dy);
 
         switch (moveResult) {
@@ -32,6 +33,10 @@ public class DirectionsKeyHandler implements KeyHandler {
                 break;
             case ATTACK:
                 player.attack(player.getNeighbourCellActor(dx, dy));
+                break;
+            case ITEM:
+                player.move(dx, dy);
+                player.pickup(player.getCell().getItem());
                 break;
             case BLOCKED:
                 break;

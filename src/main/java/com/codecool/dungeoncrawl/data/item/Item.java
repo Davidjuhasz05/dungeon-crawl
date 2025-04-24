@@ -22,6 +22,10 @@ public abstract class Item implements Drawable {
         return cell;
     }
 
+    public void setCell(Cell cell) {
+        this.cell = cell;
+    }
+
     public int getValue() {
         return value;
     }
@@ -30,5 +34,7 @@ public abstract class Item implements Drawable {
         return name;
     }
 
-
+    public ItemType getItemType() {
+        return itemType;
+    }
 }

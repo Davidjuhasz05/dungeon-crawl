@@ -2,11 +2,12 @@ package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.Drawable;
+import com.codecool.dungeoncrawl.data.item.Item;
 
 public abstract class Actor implements Drawable {
     private Cell cell;
-    private int health = 10;
-    private int damage = 5;
+    protected int health = 10;
+    protected int damage = 5;
     private final boolean isHostile;
 
     public Actor(Cell cell, boolean isHostile) {
@@ -21,9 +22,14 @@ public abstract class Actor implements Drawable {
         if (nextCell.getType().isBlocked()) return MoveResult.BLOCKED;
 
         Actor target = nextCell.getActor();
+        Item targetItem = nextCell.getItem();
 
-        if (target == null) {
+        if (target == null && targetItem == null) {
             return MoveResult.MOVE;
+        }
+
+        if (targetItem != null) {
+            return MoveResult.ITEM;
         }
 
         if (target.isHostile()) {
@@ -39,14 +45,20 @@ public abstract class Actor implements Drawable {
         cell = nextCell;
     }
 
-    public void attack(Actor target) {
-        int damage = this.getDamage();
-        int targetHealth = target.getHealth();
-        if(damage >= targetHealth) {
-            kill(target);
+    public void attacking(Actor target, int damage) {
+        if (damage <= 0) {
             return;
         }
+        int targetHealth = target.getHealth();
         target.setHealth(targetHealth - damage);
+        if (damage >= targetHealth) {
+            target.setHealth(0);
+            kill(target);
+        }
+    }
+
+    public void attack(Actor target) {
+        attacking(target, damage);
     }
 
     private void kill(Actor target) {
@@ -54,7 +66,7 @@ public abstract class Actor implements Drawable {
         target.setCell(null);
     }
 
-    public Actor getNeighbourCellActor(int dx, int dy){
+    public Actor getNeighbourCellActor(int dx, int dy) {
         return this.cell.getNeighbourActor(dx, dy);
     }
 
@@ -90,5 +102,7 @@ public abstract class Actor implements Drawable {
         return cell.getY();
     }
 
-    public boolean isHostile() {return isHostile;}
+    public boolean isHostile() {
+        return isHostile;
+    }
 }
