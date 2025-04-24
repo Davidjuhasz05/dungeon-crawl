@@ -1,8 +1,10 @@
 package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.data.Cell;
+import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.actors.MoveResult;
+import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.item.Item;
 import java.util.List;
 import com.codecool.dungeoncrawl.data.actors.Enemy;
@@ -12,10 +14,12 @@ import java.util.stream.Collectors;
 
 
 public class GameLogic {
-    private final GameMap map;
+    private GameMap map;
+    private final List<String> mapPaths = List.of("/dungeon.txt", "/forest.txt");
+    private int currentMapIndex = 0;
 
     public GameLogic() {
-        this.map = MapLoader.loadMap();
+        this.map = MapLoader.loadMap(mapPaths.get(currentMapIndex++));
     }
 
     public double getMapWidth() {
@@ -80,4 +84,26 @@ public class GameLogic {
     public GameMap getMap() {
         return map;
     }
+
+    public void setNextMap() {
+        Player currentPlayer = map.getPlayer();
+        this.map = MapLoader.loadMap(mapPaths.get(currentMapIndex++));
+        Player newPlayer = map.getPlayer();
+        currentPlayer.setCell(newPlayer.getCell());
+        newPlayer.getCell().setActor(null);
+        newPlayer.setCell(null);
+        currentPlayer.getCell().setActor(currentPlayer);
+        map.setPlayer(currentPlayer);
+    }
+
+    public void handleNextTurn() {
+        Player player = map.getPlayer();
+        Cell playerPos = player.getCell();
+        if(playerPos.getType().equals(CellType.EXIT) && player.hasKey()) {
+            setNextMap();
+        } else {
+            handleEnemiesTurn();
+        }
+    }
+
 }
