@@ -4,7 +4,7 @@ import com.codecool.dungeoncrawl.data.Cell;
 
 public class Armor extends Item {
     public Armor(Cell cell) {
-        super(cell, ItemType.ARMOR, 3, "Armor");
+        super(cell, ItemType.ARMOR, 1, "Armor");
     }
 
     @Override

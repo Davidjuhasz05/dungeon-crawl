@@ -46,6 +46,9 @@ public abstract class Actor implements Drawable {
     }
 
     public void attacking(Actor target, int damage) {
+        if (damage <= 0) {
+            return;
+        }
         int targetHealth = target.getHealth();
         target.setHealth(targetHealth - damage);
         if (damage >= targetHealth) {
