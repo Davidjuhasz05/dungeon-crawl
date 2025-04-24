@@ -70,6 +70,27 @@ public class MapLoader {
             case 'd':
                 cell.setType(CellType.EXIT);
                 break;
+            case 'G':
+                cell.setType(CellType.WALL);
+                break;
+            case 'A':
+                cell.setType(CellType.WALL);
+                break;
+            case 'M':
+                cell.setType(CellType.WALL);
+                break;
+            case 'E':
+                cell.setType(CellType.WALL);
+                break;
+            case 'O':
+                cell.setType(CellType.WALL);
+                break;
+            case 'V':
+                cell.setType(CellType.WALL);
+                break;
+            case 'R':
+                cell.setType(CellType.WALL);
+                break;
             default:
                 throw new RuntimeException("Unrecognized character: '" + c + "'");
         }
