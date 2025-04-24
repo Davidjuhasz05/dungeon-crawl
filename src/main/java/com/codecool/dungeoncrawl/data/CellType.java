@@ -3,7 +3,8 @@ package com.codecool.dungeoncrawl.data;
 public enum CellType {
     EMPTY("empty", false),
     FLOOR("floor", true),
-    WALL("wall", false);
+    WALL("wall", false),
+    EXIT("exit", true);
 
     private final String tileName;
     private final boolean isPassable;

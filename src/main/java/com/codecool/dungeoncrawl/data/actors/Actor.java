@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
+import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.Drawable;
 
 public abstract class Actor implements Drawable {
@@ -15,22 +16,7 @@ public abstract class Actor implements Drawable {
         this.isHostile = isHostile;
     }
 
-    public MoveResult evaluateMove(int dx, int dy) {
-        Cell nextCell = this.getCell().getNeighbor(dx, dy);
-
-        if (nextCell.getType().isBlocked()) return MoveResult.BLOCKED;
-
-        Actor target = nextCell.getActor();
-
-        if (target == null) {
-            return MoveResult.MOVE;
-        }
-
-        if (target.isHostile()) {
-            return MoveResult.ATTACK;
-        }
-        return MoveResult.BLOCKED;
-    }
+    public abstract MoveResult evaluateMove(int dx, int dy);
 
     public void move(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
