@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.actors.Skeleton;
+import com.codecool.dungeoncrawl.data.item.Armor;
 import com.codecool.dungeoncrawl.data.item.ItemType;
 import com.codecool.dungeoncrawl.data.item.Weapon;
 
@@ -43,6 +44,10 @@ public class MapLoader {
                         case 'w':
                             cell.setType(CellType.FLOOR);
                             map.addItem(new Weapon(cell));
+                            break;
+                        case 'a':
+                            cell.setType(CellType.FLOOR);
+                            map.addItem(new Armor(cell));
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
