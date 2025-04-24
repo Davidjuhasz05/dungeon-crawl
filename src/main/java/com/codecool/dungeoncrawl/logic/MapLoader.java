@@ -42,7 +42,7 @@ public class MapLoader {
                             break;
                         case 'w':
                             cell.setType(CellType.FLOOR);
-                            new Weapon(cell, ItemType.WEAPON, 3, "Sword");
+                            map.addItem(new Weapon(cell));
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
