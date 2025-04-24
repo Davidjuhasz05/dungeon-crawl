@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.data;
 import com.codecool.dungeoncrawl.data.actors.Enemy;
 import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.actors.Skeleton;
+import com.codecool.dungeoncrawl.data.item.Item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ public class GameMap {
     private final int height;
     private final Cell[][] cells;
     private final List<Enemy> enemies = new ArrayList<>();
+    private final List<Item> items = new ArrayList<>();
     private Player player;
 
     public GameMap(int width, int height, CellType defaultCellType) {
@@ -39,6 +41,10 @@ public class GameMap {
 
     public void addEnemy(Skeleton enemy) {
         this.enemies.add(enemy);
+    }
+
+    public void addItem(Item item) {
+        this.items.add(item);
     }
 
     public List<Enemy> getEnemies() {

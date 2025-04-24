@@ -5,12 +5,12 @@ import com.codecool.dungeoncrawl.data.Cell;
 public class Key extends Item {
 
 
-    public Key(Cell cell, ItemType itemType, int value, String name) {
-        super(cell, itemType, value, name);
+    public Key(Cell cell, int value) {
+        super(cell, ItemType.ACCESS, value, "Key: "+value);
     }
 
     @Override
     public String getTileName() {
-        return "";
+        return "key";
     }
 }
