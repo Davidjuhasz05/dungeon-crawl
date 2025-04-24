@@ -25,9 +25,19 @@ public class Player extends Actor {
     }
 
     public void pickup(Item item) {
-        addToInventory(item);
+        if (item.getItemType() == ItemType.POTION) {
+            handlePotion(item);
+        } else {
+            addToInventory(item);
+        }
         item.getCell().setItem(null);
         item.setCell(null);
+    }
+
+    private void handlePotion(Item item) {
+        if (item.getName() == "Health potion") {
+            health += item.getValue();
+        }
     }
 
     public String getTileName() {
