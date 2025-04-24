@@ -22,6 +22,12 @@ public class Player extends Actor {
         inventory.remove(item);
     }
 
+    public void pickup(Item item) {
+        addToInventory(item);
+        item.getCell().setItem(null);
+        item.setCell(null);
+    }
+
     public String getTileName() {
         return "player";
     }
