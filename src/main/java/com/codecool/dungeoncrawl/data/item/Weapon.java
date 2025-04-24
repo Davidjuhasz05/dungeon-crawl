@@ -6,7 +6,7 @@ import com.codecool.dungeoncrawl.data.actors.Actor;
 public class Weapon extends Item {
 
     public Weapon(Cell cell ) {
-        super(cell, ItemType.WEAPON, 3, "Sword");
+        super(cell, ItemType.WEAPON, 5, "Sword");
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.item.Item;
+import com.codecool.dungeoncrawl.data.item.ItemType;
+import com.codecool.dungeoncrawl.data.item.Weapon;
 
 import java.util.List;
 
@@ -32,8 +34,18 @@ public class Player extends Actor {
         return "player";
     }
 
-    public List<Item> getInventory(){
+    public List<Item> getInventory() {
         return this.inventory;
     }
 
+    @Override
+    public void attack(Actor target) {
+        int attackDamage = damage;
+        for (Item item : inventory) {
+            if (item.getItemType() == ItemType.WEAPON) {
+                attackDamage += item.getValue();
+                super.attacking(target, attackDamage);
+            }
+        }
+    }
 }
