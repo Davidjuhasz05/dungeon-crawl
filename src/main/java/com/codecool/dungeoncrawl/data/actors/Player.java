@@ -42,14 +42,35 @@ public class Player extends Actor {
         inventory.add(item);
     }
 
-    public void removeFromInventory(Item item) {
-        inventory.remove(item);
+    public boolean hasWeapon() {
+        for(Item item : inventory) {
+            if(item.getItemType() == ItemType.WEAPON){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void changeWeapon(Item weapon) {
+        Item replacedWeapon = null;
+        for(int i = 0; i < inventory.size(); i++) {
+            if(inventory.get(i).getItemType() == ItemType.WEAPON){
+                replacedWeapon = inventory.set(i, weapon);
+            }
+        }
+        if(replacedWeapon != null) {
+            this.getCell().setItem(replacedWeapon);
+            replacedWeapon.setCell(this.getCell());
+        }
     }
 
     public void pickup(Item item) {
         if (item.getItemType() == ItemType.POTION) {
             handlePotion(item);
-        } else {
+        } else if(item.getItemType() == ItemType.WEAPON && hasWeapon()) {
+            changeWeapon(item);
+            return;
+        }else{
             addToInventory(item);
         }
         item.getCell().setItem(null);
