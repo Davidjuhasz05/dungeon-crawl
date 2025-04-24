@@ -14,7 +14,9 @@ public abstract class Enemy extends Actor {
   public boolean move(int dx, int dy) {
     Cell nextCell  = this.getCell().getNeighbor(dx, dy);
     CellType nextCellType = nextCell.getType();
-    if (nextCellType.isPassable() && (nextCell.getActor() == null)){
+    if (nextCellType.isPassable()
+            && nextCell.getActor() == null
+            && nextCell.getItem() == null) {
       return super.move(dx, dy);
     }
     return false;
