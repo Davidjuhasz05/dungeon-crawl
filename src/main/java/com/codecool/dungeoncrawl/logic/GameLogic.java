@@ -10,6 +10,7 @@ import com.codecool.dungeoncrawl.data.actors.Enemy;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+
 public class GameLogic {
     private final GameMap map;
 
@@ -41,15 +42,17 @@ public class GameLogic {
         for(Enemy enemy : map.getEnemies()) {
             int dx, dy;
             int movementRange = enemy.getMovementRange();
+            int retries = 0;
             boolean isValidMove = false;
-            while(!isValidMove) {
-                dx = random.nextInt((movementRange + 1) - (movementRange * -1)) + (movementRange * -1);
-                dy = random.nextInt((movementRange + 1) - (movementRange * -1)) + (movementRange * -1);
+            while(!isValidMove && ++retries != 10) {
+                dx = random.nextInt(2 * movementRange + 1) - movementRange;
+                dy = random.nextInt(2 * movementRange + 1) - movementRange;
                 MoveResult moveResult = enemy.evaluateMove(dx, dy);
                 switch(moveResult) {
                     case MOVE:
                         enemy.move(dx, dy);
                         isValidMove = true;
+
                         break;
                     case ATTACK:
                         enemy.attack(enemy.getNeighbourCellActor(dx, dy));
