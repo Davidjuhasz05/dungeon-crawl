@@ -17,6 +17,7 @@ public class Player extends Actor {
 
     @Override
     public MoveResult evaluateMove(int dx, int dy) {
+
         Cell nextCell = this.getCell().getNeighbor(dx, dy);
 
         if (nextCell.getType().isBlocked()) return MoveResult.BLOCKED;
