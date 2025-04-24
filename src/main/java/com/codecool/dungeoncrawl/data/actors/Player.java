@@ -1,11 +1,8 @@
 package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
-import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.item.Item;
 import com.codecool.dungeoncrawl.data.item.ItemType;
-import com.codecool.dungeoncrawl.data.item.ItemType;
-import com.codecool.dungeoncrawl.data.item.Weapon;
 
 import java.util.List;
 
@@ -16,6 +13,29 @@ public class Player extends Actor {
 
     public Player(Cell cell) {
         super(cell, false);
+    }
+
+    @Override
+    public MoveResult evaluateMove(int dx, int dy) {
+        Cell nextCell = this.getCell().getNeighbor(dx, dy);
+
+        if (nextCell.getType().isBlocked()) return MoveResult.BLOCKED;
+
+        Actor target = nextCell.getActor();
+        Item targetItem = nextCell.getItem();
+
+        if (target == null && targetItem == null) {
+            return MoveResult.MOVE;
+        }
+
+        if (targetItem != null) {
+            return MoveResult.ITEM;
+        }
+
+        if (target.isHostile()) {
+            return MoveResult.ATTACK;
+        }
+        return MoveResult.BLOCKED;
     }
 
     public void addToInventory(Item item) {

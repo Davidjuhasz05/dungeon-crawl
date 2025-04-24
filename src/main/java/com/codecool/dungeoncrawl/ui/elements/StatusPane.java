@@ -45,11 +45,10 @@ public class StatusPane {
     }
 
     public void setInventoryValue(List<Item> inventory){
-
-        int counter = 3;
+        int inventoryCounter = 3;
         for(Item item : inventory){
             Label inventoryLabel = new Label(item.getName());
-            ui.add(inventoryLabel, 0, counter++);
+            ui.add(inventoryLabel, 0, inventoryCounter++);
         }
 
     }

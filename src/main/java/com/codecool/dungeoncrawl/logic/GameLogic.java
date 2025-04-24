@@ -86,7 +86,14 @@ public class GameLogic {
     }
 
     public void setNextMap() {
+        Player currentPlayer = map.getPlayer();
         this.map = MapLoader.loadMap(mapPaths.get(currentMapIndex++));
+        Player newPlayer = map.getPlayer();
+        currentPlayer.setCell(newPlayer.getCell());
+        newPlayer.getCell().setActor(null);
+        newPlayer.setCell(null);
+        currentPlayer.getCell().setActor(currentPlayer);
+        map.setPlayer(currentPlayer);
     }
 
     public void handleNextTurn() {
