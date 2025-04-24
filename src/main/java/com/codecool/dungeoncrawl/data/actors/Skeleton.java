@@ -6,6 +6,7 @@ public class Skeleton extends Enemy {
     public Skeleton(Cell cell) {
         super(cell);
         this.movementRange = 1;
+        this.setDamage(2);
     }
 
     @Override
