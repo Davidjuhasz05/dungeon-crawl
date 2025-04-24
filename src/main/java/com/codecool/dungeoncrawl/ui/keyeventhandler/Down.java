@@ -1,18 +1,9 @@
 package com.codecool.dungeoncrawl.ui.keyeventhandler;
 
-import com.codecool.dungeoncrawl.data.GameMap;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
-public class Down implements KeyHandler {
-    public static final KeyCode code = KeyCode.DOWN;
-
-    @Override
-    public boolean perform(KeyEvent event, GameMap map) {
-        if (code.equals(event.getCode())) {
-            map.getPlayer().move(0, 1);
-            return true;
-        }
-        return false;
+public class Down extends DirectionsKeyHandler {
+    public Down() {
+        super(KeyCode.DOWN, 0, 1);
     }
 }

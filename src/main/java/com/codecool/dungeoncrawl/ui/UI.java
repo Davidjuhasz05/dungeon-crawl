@@ -44,7 +44,7 @@ public class UI {
         for (KeyHandler keyHandler : keyHandlers) {
             boolean hasMoved = keyHandler.perform(keyEvent, logic.getMap());
             if(hasMoved){
-                logic.moveEnemies();
+                logic.handleEnemiesTurn();
             }
         }
         refresh();

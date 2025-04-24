@@ -17,5 +17,5 @@ public enum CellType {
         return tileName;
     }
 
-    public boolean isPassable() {return isPassable;}
+    public boolean isBlocked() {return !isPassable;}
 }

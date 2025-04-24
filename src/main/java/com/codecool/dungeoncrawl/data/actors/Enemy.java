@@ -1,7 +1,7 @@
 package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
-import com.codecool.dungeoncrawl.data.CellType;
+import com.codecool.dungeoncrawl.data.item.Item;
 
 public abstract class Enemy extends Actor {
   protected int movementRange;
@@ -11,15 +11,23 @@ public abstract class Enemy extends Actor {
   }
 
   @Override
-  public boolean move(int dx, int dy) {
-    Cell nextCell  = this.getCell().getNeighbor(dx, dy);
-    CellType nextCellType = nextCell.getType();
-    if (nextCellType.isPassable()
-            && nextCell.getActor() == null
-            && nextCell.getItem() == null) {
-      return super.move(dx, dy);
+  public MoveResult evaluateMove(int dx, int dy) {
+    Cell nextCell = this.getCell().getNeighbor(dx, dy);
+
+    if (nextCell.getType().isBlocked()) return MoveResult.BLOCKED;
+
+    Actor target = nextCell.getActor();
+    Item targetItem = nextCell.getItem();
+
+    if (target == null && targetItem == null) {
+      return MoveResult.MOVE;
     }
-    return false;
+
+    if (target != null && !target.isHostile()) {
+      return MoveResult.ATTACK;
+    }
+
+    return MoveResult.BLOCKED;
   }
 
   public int getMovementRange() {
