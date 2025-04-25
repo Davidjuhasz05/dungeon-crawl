@@ -103,7 +103,7 @@ public class GameLogic {
     public void handleNextTurn() {
         Player player = map.getPlayer();
         Cell playerPos = player.getCell();
-        if(playerPos.getType().equals(CellType.EXIT) && player.hasKey()) {
+        if(playerPos.getType().equals(CellType.DOOR) && player.hasKey()) {
             setNextMap();
         } else {
             handleEnemiesTurn();
