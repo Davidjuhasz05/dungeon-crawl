@@ -61,7 +61,7 @@ public class StatusPane {
         inventoryListBox.getChildren().clear();
 
         for (Item item : inventory) {
-            Label itemLabel = new Label("• " + item.getName());
+            Label itemLabel = new Label(item.getName());
             itemLabel.setStyle(
                     "-fx-text-fill: white; " +
                             "-fx-font-size: 18; " +
