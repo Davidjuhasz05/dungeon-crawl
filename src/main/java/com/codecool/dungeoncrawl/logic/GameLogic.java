@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class GameLogic {
     private GameMap map;
-    private final List<String> mapPaths = List.of("/gameover.txt","/dungeon.txt", "/forest.txt");
+    private final List<String> mapPaths = List.of("/gameover.txt","/dungeon.txt", "/dungeon2.txt");
     private int currentMapIndex = 1;
 
     public GameLogic() {
@@ -56,7 +56,6 @@ public class GameLogic {
                     case MOVE:
                         enemy.move(dx, dy);
                         isValidMove = true;
-
                         break;
                     case ATTACK:
                         enemy.attack(enemy.getNeighbourCellActor(dx, dy));
@@ -67,7 +66,7 @@ public class GameLogic {
                 }
             }
         }
-        if (map.getPlayer().getHealth() < 1 || map.getPlayer().getCell() == null) {
+        if (map.getPlayer().getHealth() <= 0 || map.getPlayer().getCell() == null) {
             setGameOver();
         }
 
@@ -75,6 +74,10 @@ public class GameLogic {
 
     public Cell getCell(int x, int y) {
         return map.getCell(x, y);
+    }
+
+    public Cell getPlayerCell() {
+        return map.getPlayer().getCell();
     }
 
     public String getPlayerHealth() {

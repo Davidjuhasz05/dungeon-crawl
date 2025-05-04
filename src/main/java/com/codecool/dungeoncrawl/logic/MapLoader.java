@@ -74,7 +74,7 @@ public class MapLoader {
                 cell.setType(CellType.DOOR);
                 break;
             case '0':
-                cell.setType(CellType.EXIT);
+                cell.setType(CellType.QUIT);
                 break;
             case '1':
                 cell.setType(CellType.RETRY);
