@@ -30,21 +30,20 @@ public abstract class Actor implements Drawable {
         if (damage <= 0) {
             return;
         }
-        int targetHealth = target.getHealth();
-        target.setHealth(targetHealth - damage);
-        if (damage >= targetHealth) {
-            target.setHealth(0);
-            kill(target);
+        target.getHit(damage);
+    }
+
+    public void getHit(int damage) {
+        health -= damage;
+        if (health <= 0) {
+            health = 0;
+            cell.setActor(null);
+            cell = null;
         }
     }
 
     public void attack(Actor target) {
         attacking(target, damage);
-    }
-
-    private void kill(Actor target) {
-        target.getCell().setActor(null);
-        target.setCell(null);
     }
 
     public Actor getNeighbourCellActor(int dx, int dy) {
