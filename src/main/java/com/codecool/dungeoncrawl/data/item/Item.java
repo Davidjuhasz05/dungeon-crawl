@@ -3,6 +3,7 @@ package com.codecool.dungeoncrawl.data.item;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.Drawable;
+import com.codecool.dungeoncrawl.data.actors.Player;
 
 public abstract class Item implements Drawable {
     private Cell cell;
@@ -17,6 +18,16 @@ public abstract class Item implements Drawable {
         this.value = value;
         this.name = name;
     };
+
+    public void doEffect(Player player) {
+        player.addToInventory(this);
+        removeFromCell();
+    }
+
+    protected void removeFromCell() {
+        cell.setItem(null);
+        cell = null;
+    }
 
     public Cell getCell() {
         return cell;

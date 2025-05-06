@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.data.item;
 
 import com.codecool.dungeoncrawl.data.Cell;
+import com.codecool.dungeoncrawl.data.actors.Player;
 
 public class Key extends Item {
 
