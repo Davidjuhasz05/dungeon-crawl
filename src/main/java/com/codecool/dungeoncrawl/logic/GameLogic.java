@@ -76,8 +76,8 @@ public class GameLogic {
         return map.getCell(x, y);
     }
 
-    public Cell getPlayerCell() {
-        return map.getPlayer().getCell();
+    public Player getPlayer() {
+        return map.getPlayer();
     }
 
     public String getPlayerHealth() {
@@ -90,6 +90,10 @@ public class GameLogic {
 
     public GameMap getMap() {
         return map;
+    }
+
+    public int getCurrentMapIndex() {
+        return currentMapIndex;
     }
 
     public void setNextMap() {
@@ -114,7 +118,8 @@ public class GameLogic {
     }
 
     public void setGameOver(){
-        this.map = MapLoader.loadMap(mapPaths.get(0));
+        currentMapIndex = 0;
+        this.map = MapLoader.loadMap(mapPaths.get(currentMapIndex));
     }
 
 

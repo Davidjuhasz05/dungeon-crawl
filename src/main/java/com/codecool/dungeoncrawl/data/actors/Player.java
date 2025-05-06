@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Player extends Actor {
+    private static final int VISION_RANGE = 5;
     private final List<Item> inventory = new ArrayList<>();
 
     public Player(Cell cell) {
@@ -109,4 +110,14 @@ public class Player extends Actor {
             }
         }
     }
+
+    public boolean isVisible(Cell cell) {
+        int dx = Math.abs(cell.getX() - getCell().getX());
+        int dy = Math.abs(cell.getY() - getCell().getY());
+
+        return dx + dy <= VISION_RANGE
+                && dx != VISION_RANGE
+                && dy != VISION_RANGE;
+    }
+
 }

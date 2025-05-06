@@ -53,25 +53,31 @@ public class UI {
     public void refresh() {
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        Cell playerCell = logic.getPlayerCell();
         for (int x = 0; x < logic.getMapWidth(); x++) {
             for (int y = 0; y < logic.getMapHeight(); y++) {
                 Cell cell = logic.getCell(x, y);
-                int dx = Math.abs(x - playerCell.getX());
-                int dy = Math.abs(y- playerCell.getY());
-                if(dx + dy <= 5 && dx != 5 && dy != 5) {
-                    if (cell.getActor() != null) {
-                        Tiles.drawTile(context, cell.getActor(), x, y);
-                    } else if(cell.getItem() != null) {
-                        Tiles.drawTile(context, cell.getItem(), x, y);
-                    } else {
-                        Tiles.drawTile(context, cell, x, y);
+                if(logic.getCurrentMapIndex() != 0) {
+                    if(logic.getPlayer().isVisible(cell)) {
+                        drawTiles(cell, x, y);
                     }
+                } else {
+                    drawTiles(cell, x, y);
                 }
+
             }
         }
 
         mainStage.setHealthLabelText(logic.getPlayerHealth());
         mainStage.setInventoryLabelText(logic.getPlayerInventory());
+    }
+
+    private void drawTiles(Cell cell, int x, int y) {
+        if (cell.getActor() != null) {
+            Tiles.drawTile(context, cell.getActor(), x, y);
+        } else if(cell.getItem() != null) {
+            Tiles.drawTile(context, cell.getItem(), x, y);
+        } else {
+            Tiles.drawTile(context, cell, x, y);
+        }
     }
 }
