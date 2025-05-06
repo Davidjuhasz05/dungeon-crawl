@@ -54,9 +54,8 @@ public class StatusPane {
     }
 
     // Private helpers
-
     private VBox createHealthSection() {
-        Label label = createLabel("❤️ Health", LABEL_STYLE);
+        Label label = createLabel("❤ Health", LABEL_STYLE);
         VBox box = new VBox(5, label, healthValueLabel);
         return box;
     }
