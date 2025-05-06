@@ -6,6 +6,7 @@ import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.actors.Skeleton;
 import com.codecool.dungeoncrawl.data.item.*;
+import com.codecool.dungeoncrawl.data.item.weapon.Sword;
 
 import java.io.InputStream;
 import java.util.Scanner;
@@ -25,14 +26,14 @@ public class MapLoader {
             for (int x = 0; x < width; x++) {
                 if (x < line.length()) {
                     Cell cell = map.getCell(x, y);
-                    checkCellTypes(line.charAt(x), cell, map);
+                    setCellTypes(line.charAt(x), cell, map);
                 }
             }
         }
         return map;
     }
 
-    private static void checkCellTypes(char c, Cell cell, GameMap map) {
+    private static void setCellTypes(char c, Cell cell, GameMap map) {
         switch (c) {
             case ' ':
                 cell.setType(CellType.EMPTY);
@@ -43,56 +44,54 @@ public class MapLoader {
             case '.':
                 cell.setType(CellType.FLOOR);
                 break;
+            case ',':
+                cell.setType(CellType.FLOOR2);
+                break;
             case 's':
                 cell.setType(CellType.FLOOR);
                 map.addEnemy(new Skeleton(cell));
                 break;
             case 'w':
                 cell.setType(CellType.FLOOR);
-                map.addItem(new Weapon(cell));
+                new Sword(cell);
                 break;
             case 'a':
                 cell.setType(CellType.FLOOR);
-                map.addItem(new Armor(cell));
+                new Armor(cell);
                 break;
             case 'k':
                 cell.setType(CellType.FLOOR);
-                map.addItem(new Key(cell, 1));
+                new Key(cell);
                 break;
             case 'p':
                 cell.setType(CellType.FLOOR);
-                map.addItem(new Potion(cell));
+                new HealthPotion(cell);
                 break;
             case '@':
                 cell.setType(CellType.FLOOR);
                 map.setPlayer(new Player(cell));
                 break;
             case 'd':
+                cell.setType(CellType.DOOR);
+                break;
+            case '0':
                 cell.setType(CellType.EXIT);
                 break;
-            case 'G':
-                cell.setType(CellType.WALL);
+            case '1':
+                cell.setType(CellType.RETRY);
                 break;
-            case 'A':
-                cell.setType(CellType.WALL);
+            case '+':
+                cell.setType(CellType.PROP);
                 break;
-            case 'M':
-                cell.setType(CellType.WALL);
-                break;
-            case 'E':
-                cell.setType(CellType.WALL);
-                break;
-            case 'O':
-                cell.setType(CellType.WALL);
-                break;
-            case 'V':
-                cell.setType(CellType.WALL);
-                break;
-            case 'R':
-                cell.setType(CellType.WALL);
+            case '-':
+                cell.setType(CellType.GRASS);
                 break;
             default:
-                throw new RuntimeException("Unrecognized character: '" + c + "'");
+                if(c >= 'A' && c <= 'Z') {
+                    cell.setType(CellType.valueOf(String.valueOf(c)));
+                } else {
+                    throw new RuntimeException("Unrecognized character: '" + c + "'");
+                }
         }
     }
 

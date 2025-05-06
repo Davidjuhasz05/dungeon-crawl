@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 public class GameLogic {
     private GameMap map;
+    private static final int MAX_STEP_RETRIES = 10;
     private final List<String> mapPaths = List.of("/gameover.txt","/dungeon.txt", "/forest.txt");
     private int currentMapIndex = 1;
 
@@ -48,7 +49,7 @@ public class GameLogic {
             int movementRange = enemy.getMovementRange();
             int retries = 0;
             boolean isValidMove = false;
-            while(!isValidMove && ++retries != 10) {
+            while(!isValidMove && ++retries != MAX_STEP_RETRIES) {
                 dx = random.nextInt(2 * movementRange + 1) - movementRange;
                 dy = random.nextInt(2 * movementRange + 1) - movementRange;
                 MoveResult moveResult = enemy.evaluateMove(dx, dy);
@@ -103,7 +104,7 @@ public class GameLogic {
     public void handleNextTurn() {
         Player player = map.getPlayer();
         Cell playerPos = player.getCell();
-        if(playerPos.getType().equals(CellType.EXIT) && player.hasKey()) {
+        if(playerPos.getType().equals(CellType.DOOR) && player.hasKey()) {
             setNextMap();
         } else {
             handleEnemiesTurn();
