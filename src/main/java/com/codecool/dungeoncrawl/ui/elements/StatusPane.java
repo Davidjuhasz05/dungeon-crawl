@@ -53,17 +53,15 @@ public class StatusPane {
         }
     }
 
-    // Private helpers
+    //Helpers!
     private VBox createHealthSection() {
         Label label = createLabel("❤ Health", LABEL_STYLE);
-        VBox box = new VBox(5, label, healthValueLabel);
-        return box;
+        return new VBox(5, label, healthValueLabel);
     }
 
     private VBox createInventorySection() {
         Label label = createLabel("🎒 Inventory", LABEL_STYLE);
-        VBox box = new VBox(10, label, inventoryListBox);
-        return box;
+        return new VBox(10, label, inventoryListBox);
     }
 
     private Label createLabel(String text, String style) {
