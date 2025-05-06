@@ -78,8 +78,8 @@ public class GameLogic {
         return map.getCell(x, y);
     }
 
-    public String getPlayerHealth() {
-        return Integer.toString(map.getPlayer().getHealth());
+    public int getPlayerHealth() {
+        return map.getPlayer().getHealth();
     }
 
     public List<Item> getPlayerInventory(){
