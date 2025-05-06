@@ -26,13 +26,6 @@ public abstract class Actor implements Drawable {
         cell = nextCell;
     }
 
-    public void attacking(Actor target, int damage) {
-        if (damage <= 0) {
-            return;
-        }
-        target.getHit(damage);
-    }
-
     public void getHit(int damage) {
         health -= damage;
         if (health <= 0) {
@@ -43,7 +36,7 @@ public abstract class Actor implements Drawable {
     }
 
     public void attack(Actor target) {
-        attacking(target, damage);
+        target.getHit(damage);
     }
 
     public Actor getNeighbourCellActor(int dx, int dy) {

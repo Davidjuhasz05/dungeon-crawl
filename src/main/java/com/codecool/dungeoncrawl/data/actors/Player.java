@@ -104,8 +104,22 @@ public class Player extends Actor {
         for (Item item : inventory) {
             if (item.getItemType() == ItemType.WEAPON) {
                 attackDamage += item.getValue();
-                super.attacking(target, attackDamage);
             }
+        }
+        target.getHit(attackDamage);
+    }
+
+    @Override
+    public void getHit(int damage) {
+        int attackDamage = damage;
+        for (Item item : inventory) {
+            if (item.getItemType() == ItemType.ARMOR) {
+                attackDamage -= item.getValue();
+
+            }
+        }
+        if(attackDamage > 0){
+            super.getHit(damage);
         }
     }
 }

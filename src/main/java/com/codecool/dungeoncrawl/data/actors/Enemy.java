@@ -34,17 +34,4 @@ public abstract class Enemy extends Actor {
     public int getMovementRange() {
         return movementRange;
     }
-
-    @Override
-    public void attack(Actor target) {
-        Player player = (Player) target;
-        int defence = 0;
-        for (Item item : player.getInventory()) {
-            if (item.getItemType() == ItemType.ARMOR) {
-                defence += item.getValue();
-            }
-        }
-        int totalDamage = damage - defence;
-        super.attacking(target, totalDamage);
-    }
 }
