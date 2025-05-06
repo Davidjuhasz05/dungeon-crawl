@@ -26,14 +26,14 @@ public class MapLoader {
             for (int x = 0; x < width; x++) {
                 if (x < line.length()) {
                     Cell cell = map.getCell(x, y);
-                    checkCellTypes(line.charAt(x), cell, map);
+                    setCellTypes(line.charAt(x), cell, map);
                 }
             }
         }
         return map;
     }
 
-    private static void checkCellTypes(char c, Cell cell, GameMap map) {
+    private static void setCellTypes(char c, Cell cell, GameMap map) {
         switch (c) {
             case ' ':
                 cell.setType(CellType.EMPTY);
@@ -43,6 +43,9 @@ public class MapLoader {
                 break;
             case '.':
                 cell.setType(CellType.FLOOR);
+                break;
+            case ',':
+                cell.setType(CellType.FLOOR2);
                 break;
             case 's':
                 cell.setType(CellType.FLOOR);
@@ -69,10 +72,26 @@ public class MapLoader {
                 map.setPlayer(new Player(cell));
                 break;
             case 'd':
+                cell.setType(CellType.DOOR);
+                break;
+            case '0':
                 cell.setType(CellType.EXIT);
                 break;
+            case '1':
+                cell.setType(CellType.RETRY);
+                break;
+            case '+':
+                cell.setType(CellType.PROP);
+                break;
+            case '-':
+                cell.setType(CellType.GRASS);
+                break;
             default:
-                throw new RuntimeException("Unrecognized character: '" + c + "'");
+                if(c >= 'A' && c <= 'Z') {
+                    cell.setType(CellType.valueOf(String.valueOf(c)));
+                } else {
+                    throw new RuntimeException("Unrecognized character: '" + c + "'");
+                }
         }
     }
 

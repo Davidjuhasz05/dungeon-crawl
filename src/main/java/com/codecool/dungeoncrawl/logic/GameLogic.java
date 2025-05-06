@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 
 public class GameLogic {
     private GameMap map;
-    private final List<String> mapPaths = List.of("/dungeon.txt", "/forest.txt");
-    private int currentMapIndex = 0;
     private static final int MAX_STEP_RETRIES = 10;
+    private final List<String> mapPaths = List.of("/gameover.txt","/dungeon.txt", "/forest.txt");
+    private int currentMapIndex = 1;
 
     public GameLogic() {
         this.map = MapLoader.loadMap(mapPaths.get(currentMapIndex++));
@@ -68,6 +68,10 @@ public class GameLogic {
                 }
             }
         }
+        if (map.getPlayer().getHealth() < 1 || map.getPlayer().getCell() == null) {
+            setGameOver();
+        }
+
     }
 
     public Cell getCell(int x, int y) {
@@ -100,11 +104,16 @@ public class GameLogic {
     public void handleNextTurn() {
         Player player = map.getPlayer();
         Cell playerPos = player.getCell();
-        if(playerPos.getType().equals(CellType.EXIT) && player.hasKey()) {
+        if(playerPos.getType().equals(CellType.DOOR) && player.hasKey()) {
             setNextMap();
         } else {
             handleEnemiesTurn();
         }
     }
+
+    public void setGameOver(){
+        this.map = MapLoader.loadMap(mapPaths.get(0));
+    }
+
 
 }
