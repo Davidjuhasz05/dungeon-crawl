@@ -17,6 +17,7 @@ public class GameLogic {
     private GameMap map;
     private final List<String> mapPaths = List.of("/dungeon.txt", "/forest.txt");
     private int currentMapIndex = 0;
+    private static final int MAX_STEP_RETRIES = 10;
 
     public GameLogic() {
         this.map = MapLoader.loadMap(mapPaths.get(currentMapIndex++));
@@ -48,7 +49,7 @@ public class GameLogic {
             int movementRange = enemy.getMovementRange();
             int retries = 0;
             boolean isValidMove = false;
-            while(!isValidMove && ++retries != 10) {
+            while(!isValidMove && ++retries != MAX_STEP_RETRIES) {
                 dx = random.nextInt(2 * movementRange + 1) - movementRange;
                 dy = random.nextInt(2 * movementRange + 1) - movementRange;
                 MoveResult moveResult = enemy.evaluateMove(dx, dy);

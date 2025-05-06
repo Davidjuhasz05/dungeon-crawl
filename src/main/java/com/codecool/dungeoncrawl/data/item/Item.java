@@ -1,23 +1,20 @@
 package com.codecool.dungeoncrawl.data.item;
 
 import com.codecool.dungeoncrawl.data.Cell;
-import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.Drawable;
 import com.codecool.dungeoncrawl.data.actors.Player;
 
 public abstract class Item implements Drawable {
     private Cell cell;
-    private ItemType itemType;
-    private int value;
-    private String name;
+    private final ItemType itemType;
+    private final String name;
 
-    public Item(Cell cell, ItemType itemType, int value, String name) {
+    public Item(Cell cell, ItemType itemType, String name) {
         this.cell = cell;
         this.cell.setItem(this);
         this.itemType = itemType;
-        this.value = value;
         this.name = name;
-    };
+    }
 
     public void doEffect(Player player) {
         player.addToInventory(this);
@@ -35,10 +32,6 @@ public abstract class Item implements Drawable {
 
     public void setCell(Cell cell) {
         this.cell = cell;
-    }
-
-    public int getValue() {
-        return value;
     }
 
     public String getName() {

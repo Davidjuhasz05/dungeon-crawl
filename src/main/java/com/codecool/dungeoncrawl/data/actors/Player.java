@@ -3,12 +3,11 @@ package com.codecool.dungeoncrawl.data.actors;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.item.Item;
 import com.codecool.dungeoncrawl.data.item.ItemType;
-import com.codecool.dungeoncrawl.data.item.Weapon;
+import com.codecool.dungeoncrawl.data.item.ItemWithValue;
+import com.codecool.dungeoncrawl.data.item.weapon.Weapon;
 
 import java.util.List;
-
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class Player extends Actor {
     private final List<Item> inventory = new ArrayList<>();
@@ -89,10 +88,8 @@ public class Player extends Actor {
     @Override
     public void attack(Actor target) {
         int attackDamage = damage;
-        for (Item item : inventory) {
-            if (item.getItemType() == ItemType.WEAPON) {
-                attackDamage += item.getValue();
-            }
+        if(weapon != null){
+            attackDamage += weapon.getValue();
         }
         target.getHit(attackDamage);
     }
@@ -102,8 +99,7 @@ public class Player extends Actor {
         int attackDamage = damage;
         for (Item item : inventory) {
             if (item.getItemType() == ItemType.ARMOR) {
-                attackDamage -= item.getValue();
-
+                attackDamage -= ((ItemWithValue) item).getValue();
             }
         }
         if(attackDamage > 0){

@@ -3,10 +3,10 @@ package com.codecool.dungeoncrawl.data.item;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.actors.Player;
 
-public class Potion extends Item {
+public class HealthPotion extends ItemWithValue {
     private static final int HEALING_VALUE = 3;
 
-    public Potion(Cell cell) {
+    public HealthPotion(Cell cell) {
         super(cell, ItemType.POTION, HEALING_VALUE, "Health potion");
     }
 

@@ -1,11 +1,10 @@
-package com.codecool.dungeoncrawl.data.item;
+package com.codecool.dungeoncrawl.data.item.weapon;
 
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.actors.Player;
+import com.codecool.dungeoncrawl.data.item.ItemType;
 
-import java.util.Optional;
-
-public class Sword extends Weapon{
+public class Sword extends Weapon {
     private static final int DAMAGE_VALUE = 5;
 
     public Sword(Cell cell) {
