@@ -3,13 +3,15 @@ package com.codecool.dungeoncrawl.data.actors;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.item.Item;
 import com.codecool.dungeoncrawl.data.item.ItemType;
+import com.codecool.dungeoncrawl.data.item.ItemWithValue;
+import com.codecool.dungeoncrawl.data.item.weapon.Weapon;
 
 import java.util.List;
-
 import java.util.ArrayList;
 
 public class Player extends Actor {
     private final List<Item> inventory = new ArrayList<>();
+    private Weapon weapon = null;
 
     public Player(Cell cell) {
         super(cell, false);
@@ -43,45 +45,30 @@ public class Player extends Actor {
         inventory.add(item);
     }
 
-    public boolean hasWeapon() {
-        for(Item item : inventory) {
-            if(item.getItemType() == ItemType.WEAPON){
-                return true;
-            }
+    public void addWeapon(Weapon weapon) {
+        if(this.weapon == null){
+            this.weapon = weapon;
+            getCell().setItem(null);
+        }else{
+            changeWeapon(weapon);
         }
-        return false;
+        weapon.setCell(null);
+
     }
 
-    public void changeWeapon(Item weapon) {
-        Item replacedWeapon = null;
-        for(int i = 0; i < inventory.size(); i++) {
-            if(inventory.get(i).getItemType() == ItemType.WEAPON){
-                replacedWeapon = inventory.set(i, weapon);
-            }
-        }
-        if(replacedWeapon != null) {
-            this.getCell().setItem(replacedWeapon);
-            replacedWeapon.setCell(this.getCell());
-        }
+    public void changeWeapon(Weapon newWeapon) {
+        Weapon oldWeapon = this.weapon;
+        this.weapon = newWeapon;
+        oldWeapon.setCell(this.getCell());
+        this.getCell().setItem(oldWeapon);
     }
 
     public void pickup(Item item) {
-        if (item.getItemType() == ItemType.POTION) {
-            handlePotion(item);
-        } else if(item.getItemType() == ItemType.WEAPON && hasWeapon()) {
-            changeWeapon(item);
-            return;
-        }else{
-            addToInventory(item);
-        }
-        item.getCell().setItem(null);
-        item.setCell(null);
+        item.doEffect(this);
     }
 
-    private void handlePotion(Item item) {
-        if (item.getName() == "Health potion") {
-            health += item.getValue();
-        }
+    public void addHealth(int health) {
+        this.health += health;
     }
 
     public String getTileName() {
@@ -102,11 +89,22 @@ public class Player extends Actor {
     @Override
     public void attack(Actor target) {
         int attackDamage = damage;
+        if(weapon != null){
+            attackDamage += weapon.getValue();
+        }
+        target.getHit(attackDamage);
+    }
+
+    @Override
+    public void getHit(int damage) {
+        int attackDamage = damage;
         for (Item item : inventory) {
-            if (item.getItemType() == ItemType.WEAPON) {
-                attackDamage += item.getValue();
-                super.attacking(target, attackDamage);
+            if (item.getItemType() == ItemType.ARMOR) {
+                attackDamage -= ((ItemWithValue) item).getValue();
             }
+        }
+        if(attackDamage > 0){
+            super.getHit(attackDamage);
         }
     }
 }

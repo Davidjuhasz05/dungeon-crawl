@@ -14,12 +14,12 @@ import javafx.stage.Stage;
 import java.util.Set;
 
 public class UI {
-    private Canvas canvas;
-    private GraphicsContext context;
+    private final Canvas canvas;
+    private final GraphicsContext context;
 
-    private MainStage mainStage;
-    private GameLogic logic;
-    private Set<KeyHandler> keyHandlers;
+    private final MainStage mainStage;
+    private final GameLogic logic;
+    private final Set<KeyHandler> keyHandlers;
 
 
     public UI(GameLogic logic, Set<KeyHandler> keyHandlers) {

@@ -2,13 +2,13 @@ package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.item.Item;
-import com.codecool.dungeoncrawl.data.item.ItemType;
 
 public abstract class Enemy extends Actor {
     protected int movementRange;
 
-    public Enemy(Cell cell) {
+    public Enemy(Cell cell, int movementRange) {
         super(cell, true);
+        this.movementRange = movementRange;
     }
 
     @Override
@@ -33,18 +33,5 @@ public abstract class Enemy extends Actor {
 
     public int getMovementRange() {
         return movementRange;
-    }
-
-    @Override
-    public void attack(Actor target) {
-        Player player = (Player) target;
-        int defence = 0;
-        for (Item item : player.getInventory()) {
-            if (item.getItemType() == ItemType.ARMOR) {
-                defence += item.getValue();
-            }
-        }
-        int totalDamage = damage - defence;
-        super.attacking(target, totalDamage);
     }
 }

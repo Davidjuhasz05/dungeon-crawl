@@ -4,9 +4,8 @@ import com.codecool.dungeoncrawl.data.Cell;
 
 public class Key extends Item {
 
-
-    public Key(Cell cell, int value) {
-        super(cell, ItemType.ACCESS, value, "Key: "+value);
+    public Key(Cell cell) {
+        super(cell, ItemType.ACCESS, "Key");
     }
 
     @Override
