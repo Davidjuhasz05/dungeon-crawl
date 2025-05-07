@@ -13,6 +13,8 @@ public class Player extends Actor {
     private static final int DEFAULT_VISION_RANGE = 3;
     private static final int TORCH_VISION_RANGE = 5;
     private static final int TORCH_REMAINING_STEPS = 35;
+    private static final int HEALTH_VALUE = 10;
+    private static final int DAMAGE_VALUE = 5;
 
     private int visionRange;
     private int remainingSteps;
@@ -21,6 +23,8 @@ public class Player extends Actor {
 
     public Player(Cell cell) {
         super(cell, false);
+        health = HEALTH_VALUE;
+        damage = DAMAGE_VALUE;
         this.visionRange = DEFAULT_VISION_RANGE;
     }
 
@@ -94,6 +98,10 @@ public class Player extends Actor {
 
     public List<Item> getInventory() {
         return this.inventory;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
     }
 
     public boolean hasKey() {

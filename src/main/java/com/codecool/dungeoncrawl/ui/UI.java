@@ -63,12 +63,15 @@ public class UI {
                 } else {
                     drawTiles(cell, x, y);
                 }
-
             }
         }
 
-        mainStage.setHealthLabelText(logic.getPlayerHealth());
+        mainStage.setHealthLabelValue(logic.getPlayerHealth());
         mainStage.setInventoryLabelText(logic.getPlayerInventory());
+
+        if(logic.getPlayerWeapon() != null){
+            mainStage.setWeaponLabelValue(logic.getPlayerWeapon());
+        }
     }
 
     private void drawTiles(Cell cell, int x, int y) {
