@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Util {
 
+    //CURRRENT DELET ORDER, map, actor, item
     public void clearAllTables(List<String> tableNames, GameDatabaseDataSource source) throws SQLException {
 
         try (Connection connection = source.connect()) {
