@@ -67,5 +67,9 @@ public class UI {
         }
         mainStage.setHealthLabelValue(logic.getPlayerHealth());
         mainStage.setInventoryLabelText(logic.getPlayerInventory());
+
+        if(logic.getPlayerWeapon() != null){
+            mainStage.setWeaponLabelValue(logic.getPlayerWeapon());
+        }
     }
 }

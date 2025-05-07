@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.ui.elements;
 
 import com.codecool.dungeoncrawl.data.item.Item;
+import com.codecool.dungeoncrawl.data.item.weapon.Weapon;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
@@ -14,23 +15,27 @@ public class StatusPane {
     private static final int HEALTH_CRITICAL_THRESHOLD = 3;
 
     private static final String FONT_FAMILY = "'Segoe UI Emoji'";
-    private static final String LABEL_STYLE = "-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 16; -fx-font-family: " + FONT_FAMILY + ";";
-    private static final String HEALTH_LABEL_STYLE = "-fx-font-size: 24; -fx-font-family: " + FONT_FAMILY + ";";
+    private static final String LABEL_STYLE = "-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 22; -fx-font-family: " + FONT_FAMILY + ";";
+    private static final String HEALTH_LABEL_STYLE = "-fx-font-size: 30; -fx-font-family: " + FONT_FAMILY + ";";
+    private static final String WEAPON_LABEL_STYLE = "-fx-font-size: 22; -fx-text-fill: white; -fx-font-family: " + FONT_FAMILY + ";";
 
     private final VBox root;
     private final Label healthValueLabel;
+    private final Label weaponValueLabel;
     private final VBox inventoryListBox;
 
     public StatusPane() {
-        root = new VBox(25);
+        root = new VBox(20);
         root.setPrefWidth(RIGHT_PANEL_WIDTH);
         root.setPadding(new Insets(RIGHT_PANEL_PADDING));
         root.setStyle("-fx-background-color: #2b2b2b; -fx-border-radius: 10px; -fx-background-radius: 10px;");
 
         healthValueLabel = createLabel("", HEALTH_LABEL_STYLE);
         root.getChildren().add(createHealthSection());
+        weaponValueLabel = createLabel("", WEAPON_LABEL_STYLE);
+        root.getChildren().add(createWeaponSection());
         inventoryListBox = new VBox(10);
-        inventoryListBox.setPadding(new Insets(5, 0, 0, 10));
+        inventoryListBox.setPadding(new Insets(10, 0, 0, 10));
         root.getChildren().add(createInventorySection());
     }
 
@@ -53,15 +58,28 @@ public class StatusPane {
         }
     }
 
-    //Helpers!
+    public void setWeaponValue(Weapon weapon){
+        weaponValueLabel.setText(weapon.getName());
+    }
+
+
     private VBox createHealthSection() {
         Label label = createLabel("❤ Health", LABEL_STYLE);
-        return new VBox(5, label, healthValueLabel);
+        VBox healthBox = new VBox(10, label, healthValueLabel);
+        healthBox.setPadding(new Insets(5, 0, 2, 0));
+        return healthBox;
     }
 
     private VBox createInventorySection() {
         Label label = createLabel("🎒 Inventory", LABEL_STYLE);
         return new VBox(10, label, inventoryListBox);
+    }
+
+    private VBox createWeaponSection() {
+        Label label = createLabel("⚔ Weapon", LABEL_STYLE);
+        VBox weaponBox = new VBox(10, label, weaponValueLabel);
+        weaponBox.setPadding(new Insets(5, 0, 2, 0));
+        return weaponBox;
     }
 
     private Label createLabel(String text, String style) {
@@ -79,7 +97,7 @@ public class StatusPane {
                         "-fx-background-color: #3c3f41;" +
                         "-fx-background-radius: 8px;" +
                         "-fx-border-radius: 8px;" +
-                        "-fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.2), 5, 0, 0, 2);" +
+                        "-fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.2), 2, 0, 0, 2);" +
                         "-fx-font-family: " + FONT_FAMILY + ";"
         );
         return label;
