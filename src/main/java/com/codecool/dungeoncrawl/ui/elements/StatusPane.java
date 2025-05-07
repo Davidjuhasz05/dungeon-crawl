@@ -17,7 +17,7 @@ public class StatusPane {
     private static final String FONT_FAMILY = "'Segoe UI Emoji'";
     private static final String LABEL_STYLE = "-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 22; -fx-font-family: " + FONT_FAMILY + ";";
     private static final String HEALTH_LABEL_STYLE = "-fx-font-size: 30; -fx-font-family: " + FONT_FAMILY + ";";
-    private static final String WEAPON_LABEL_STYLE = "-fx-font-size: 22; -fx-text-fill: white; -fx-font-family: " + FONT_FAMILY + ";";
+    private static final String WEAPON_LABEL_STYLE = "-fx-font-size: 23; -fx-text-fill: white; -fx-font-family: " + FONT_FAMILY + ";";
 
     private final VBox root;
     private final Label healthValueLabel;
@@ -25,7 +25,7 @@ public class StatusPane {
     private final VBox inventoryListBox;
 
     public StatusPane() {
-        root = new VBox(20);
+        root = new VBox(30);
         root.setPrefWidth(RIGHT_PANEL_WIDTH);
         root.setPadding(new Insets(RIGHT_PANEL_PADDING));
         root.setStyle("-fx-background-color: #2b2b2b; -fx-border-radius: 10px; -fx-background-radius: 10px;");
@@ -35,7 +35,7 @@ public class StatusPane {
         weaponValueLabel = createLabel("", WEAPON_LABEL_STYLE);
         root.getChildren().add(createWeaponSection());
         inventoryListBox = new VBox(10);
-        inventoryListBox.setPadding(new Insets(10, 0, 0, 10));
+        inventoryListBox.setPadding(new Insets(10, 0, 0, 5));
         root.getChildren().add(createInventorySection());
     }
 
@@ -62,24 +62,25 @@ public class StatusPane {
         weaponValueLabel.setText(weapon.getName());
     }
 
-
     private VBox createHealthSection() {
         Label label = createLabel("❤ Health", LABEL_STYLE);
         VBox healthBox = new VBox(10, label, healthValueLabel);
-        healthBox.setPadding(new Insets(5, 0, 2, 0));
+        healthBox.setPadding(new Insets(0));
         return healthBox;
-    }
-
-    private VBox createInventorySection() {
-        Label label = createLabel("🎒 Inventory", LABEL_STYLE);
-        return new VBox(10, label, inventoryListBox);
     }
 
     private VBox createWeaponSection() {
         Label label = createLabel("⚔ Weapon", LABEL_STYLE);
         VBox weaponBox = new VBox(10, label, weaponValueLabel);
-        weaponBox.setPadding(new Insets(5, 0, 2, 0));
+        weaponBox.setPadding(new Insets(0));
         return weaponBox;
+    }
+
+    private VBox createInventorySection() {
+        Label label = createLabel("🎒 Inventory", LABEL_STYLE);
+        VBox inventoryBox = new VBox(10, label, inventoryListBox);
+        inventoryBox.setPadding(new Insets(0));
+        return inventoryBox;
     }
 
     private Label createLabel(String text, String style) {
