@@ -1,14 +1,12 @@
 package com.codecool.dungeoncrawl.data.actors;
 
 import com.codecool.dungeoncrawl.data.Cell;
-import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.Drawable;
-import com.codecool.dungeoncrawl.data.item.Item;
 
 public abstract class Actor implements Drawable {
     private Cell cell;
-    protected int health = 10;
-    protected int damage = 5;
+    protected int health;
+    protected int damage;
     private final boolean isHostile;
 
     public Actor(Cell cell, boolean isHostile) {
@@ -45,18 +43,6 @@ public abstract class Actor implements Drawable {
 
     public int getHealth() {
         return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    public int getDamage() {
-        return damage;
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
     }
 
     public Cell getCell() {

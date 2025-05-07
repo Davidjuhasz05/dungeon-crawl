@@ -18,6 +18,7 @@ public class GameLogic {
     private static final int MAX_STEP_RETRIES = 10;
     private final List<String> mapPaths = List.of("/gameover.txt","/dungeon.txt", "/forest.txt");
     private int currentMapIndex = 1;
+    private final Random random = new Random();
 
     public GameLogic() {
         this.map = MapLoader.loadMap(mapPaths.get(currentMapIndex++));
@@ -43,7 +44,6 @@ public class GameLogic {
 
     public void handleEnemiesTurn() {
         clearDeadEnemies();
-        Random random = new Random();
         for(Enemy enemy : map.getEnemies()) {
             int dx, dy;
             int movementRange = enemy.getMovementRange();
