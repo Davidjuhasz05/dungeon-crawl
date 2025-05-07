@@ -12,9 +12,13 @@ import java.util.ArrayList;
 public class Player extends Actor {
     private final List<Item> inventory = new ArrayList<>();
     private Weapon weapon = null;
+    private static final int HEALTH_VALUE = 10;
+    private static final int DAMAGE_VALUE = 5;
 
     public Player(Cell cell) {
         super(cell, false);
+        health = HEALTH_VALUE;
+        damage = DAMAGE_VALUE;
     }
 
     @Override
