@@ -83,6 +83,10 @@ public class Player extends Actor {
         return this.inventory;
     }
 
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
     public boolean hasKey() {
         for(Item item : inventory) {
             if(item.getItemType().equals(ItemType.ACCESS)) return true;
