@@ -10,12 +10,18 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Player extends Actor {
-    private static final int VISION_RANGE = 5;
+    private static final int DEFAULT_VISION_RANGE = 3;
+    private static final int TORCH_VISION_RANGE = 5;
+    private static final int TORCH_REMAINING_STEPS = 35;
+
+    private int visionRange;
+    private int remainingSteps;
     private final List<Item> inventory = new ArrayList<>();
     private Weapon weapon = null;
 
     public Player(Cell cell) {
         super(cell, false);
+        this.visionRange = DEFAULT_VISION_RANGE;
     }
 
     @Override
@@ -40,6 +46,16 @@ public class Player extends Actor {
             return MoveResult.ATTACK;
         }
         return MoveResult.BLOCKED;
+    }
+
+    @Override
+    public void move(int dx, int dy) {
+        super.move(dx, dy);
+        if(remainingSteps > 0) {
+            remainingSteps--;
+        } else if(remainingSteps == 0) {
+            visionRange = DEFAULT_VISION_RANGE;
+        }
     }
 
     public void addToInventory(Item item) {
@@ -109,13 +125,18 @@ public class Player extends Actor {
         }
     }
 
-    public boolean isVisible(Cell cell) {
-        int dx = Math.abs(cell.getX() - getCell().getX());
-        int dy = Math.abs(cell.getY() - getCell().getY());
+    public void applyTorchEffects() {
+        visionRange = TORCH_VISION_RANGE;
+        remainingSteps = TORCH_REMAINING_STEPS;
+    }
 
-        return dx + dy <= VISION_RANGE
-                && dx != VISION_RANGE
-                && dy != VISION_RANGE;
+    public boolean isVisible(Cell cell) {
+        int x = Math.abs(cell.getX() - getCell().getX());
+        int y = Math.abs(cell.getY() - getCell().getY());
+
+        return x + y <= visionRange
+                && x != visionRange
+                && y != visionRange;
     }
 
 }

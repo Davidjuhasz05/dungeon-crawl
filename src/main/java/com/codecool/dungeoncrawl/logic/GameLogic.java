@@ -77,8 +77,13 @@ public class GameLogic {
         return map.getCell(x, y);
     }
 
-    public Player getPlayer() {
-        return map.getPlayer();
+    public boolean isVisibleForPlayer(Cell cell) {
+        return map.getPlayer().isVisible(cell);
+    }
+
+    public boolean isVisibleForTorch(Cell cell) {
+        return map.getTorches().stream()
+                .anyMatch(t -> t.isVisible(cell));
     }
 
     public String getPlayerHealth() {
@@ -122,6 +127,5 @@ public class GameLogic {
         currentMapIndex = 0;
         this.map = MapLoader.loadMap(mapPaths.get(currentMapIndex));
     }
-
 
 }

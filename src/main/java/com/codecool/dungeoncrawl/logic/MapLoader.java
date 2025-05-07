@@ -17,7 +17,6 @@ public class MapLoader {
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
         int height = scanner.nextInt();
-
         scanner.nextLine(); // empty line
 
         GameMap map = new GameMap(width, height, CellType.EMPTY);
@@ -66,6 +65,10 @@ public class MapLoader {
             case 'p':
                 cell.setType(CellType.FLOOR);
                 new HealthPotion(cell);
+                break;
+            case 't':
+                cell.setType(CellType.FLOOR);
+                map.addTorch(new Torch(cell));
                 break;
             case '@':
                 cell.setType(CellType.FLOOR);

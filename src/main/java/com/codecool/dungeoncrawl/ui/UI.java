@@ -57,7 +57,7 @@ public class UI {
             for (int y = 0; y < logic.getMapHeight(); y++) {
                 Cell cell = logic.getCell(x, y);
                 if(logic.getCurrentMapIndex() != 0) {
-                    if(logic.getPlayer().isVisible(cell)) {
+                    if(logic.isVisibleForPlayer(cell) || logic.isVisibleForTorch(cell)) {
                         drawTiles(cell, x, y);
                     }
                 } else {
