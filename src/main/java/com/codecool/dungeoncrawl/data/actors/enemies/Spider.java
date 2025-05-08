@@ -1,4 +1,4 @@
-package com.codecool.dungeoncrawl.data.actors;
+package com.codecool.dungeoncrawl.data.actors.enemies;
 
 import com.codecool.dungeoncrawl.data.Cell;
 

@@ -1,6 +1,8 @@
-package com.codecool.dungeoncrawl.data.actors;
+package com.codecool.dungeoncrawl.data.actors.enemies;
 
 import com.codecool.dungeoncrawl.data.Cell;
+import com.codecool.dungeoncrawl.data.actors.Actor;
+import com.codecool.dungeoncrawl.data.actors.MoveResult;
 import com.codecool.dungeoncrawl.data.item.Item;
 
 public abstract class Enemy extends Actor {
