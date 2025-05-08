@@ -9,7 +9,7 @@ import com.codecool.dungeoncrawl.data.item.Item;
 
 import java.sql.SQLException;
 import java.util.List;
-import com.codecool.dungeoncrawl.data.actors.Enemy;
+import com.codecool.dungeoncrawl.data.actors.enemies.Enemy;
 import com.codecool.dungeoncrawl.data.item.weapon.Weapon;
 import com.codecool.dungeoncrawl.database.ActorDaoJdbc;
 import com.codecool.dungeoncrawl.database.CellDaoJdbc;
@@ -84,7 +84,6 @@ public class GameLogic {
         if (map.getPlayer().getHealth() <= 0 || map.getPlayer().getCell() == null) {
             setGameOver();
         }
-
     }
 
     public void loadSave(){
