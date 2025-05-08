@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS item;
 CREATE TABLE item
 (
     id       SERIAL PRIMARY KEY,
-    item     VARCHAR(100) NOT NULL
+    item VARCHAR(50)  NOT NULL
 );
 
 -- Create actor table

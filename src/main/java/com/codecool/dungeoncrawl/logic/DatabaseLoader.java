@@ -28,39 +28,39 @@ public class DatabaseLoader {
         int width;
         int height;
         String mapName;
-        try{
-            width = cellDao.getMapWidth();
-            height = cellDao.getMapHeight();
+        try {
+            width = cellDao.getMapWidth() + 1;
+            height = cellDao.getMapHeight() + 1;
             mapName = cellDao.getMapName();
         } catch (SQLException e) {
             throw new SQLException("Could not get map data");
         }
 
         GameMap map = new GameMap(width, height, CellType.EMPTY, mapName);
-        try{
+        try {
             ResultSet results = cellDao.getCells();
-            while(results.next()){
+            while (results.next()) {
                 String cellType = results.getString("cellType");
-                String actorId = results.getString("actor");
-                String itemId = results.getString("item");
+                int actorId = results.getInt("actor");
+                int itemId = results.getInt("item");
                 int x = results.getInt("x");
                 int y = results.getInt("y");
                 Cell cell = map.getCell(x, y);
                 cell.setType(CellType.valueOf(cellType));
-                if(actorId != null){
-                    try{
+                if (actorId != 0) {
+                    try {
                         Actor actor = actorDao.loadActor(cell, actorId);
-                        if(actor instanceof Player){
+                        if (actor instanceof Player) {
                             map.setPlayer((Player) actor);
-                        } else{
+                        } else {
                             map.addEnemy((Enemy) actor);
                         }
-                    } catch (SQLException e){
+                    } catch (SQLException e) {
                         throw new SQLException("Could not load actor from database");
                     }
                 }
-                if(itemId != null){
-                    try{
+                if (itemId != 0) {
+                    try {
                         itemDao.loadItem(itemId, cell);
                     } catch (SQLException e) {
                         throw new SQLException("Could not load item from database");
@@ -68,7 +68,7 @@ public class DatabaseLoader {
 
                 }
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
             throw new SQLException("Could not get cell from database");
         }
         return map;
