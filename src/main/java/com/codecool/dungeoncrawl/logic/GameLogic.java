@@ -6,9 +6,14 @@ import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.actors.MoveResult;
 import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.item.Item;
+import java.sql.SQLException;
 import java.util.List;
 import com.codecool.dungeoncrawl.data.actors.enemies.Enemy;
 import com.codecool.dungeoncrawl.data.item.weapon.Weapon;
+import com.codecool.dungeoncrawl.database.ActorDaoJdbc;
+import com.codecool.dungeoncrawl.database.CellDaoJdbc;
+import com.codecool.dungeoncrawl.database.GameDatabaseDataSource;
+import com.codecool.dungeoncrawl.database.ItemDaoJdbc;
 
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -20,6 +25,13 @@ public class GameLogic {
     private final List<String> mapPaths = List.of("/gameover.txt","/dungeon.txt", "/dungeon2.txt", "/forest.txt");
     private int currentMapIndex = 0;
     private final Random random = new Random();
+    private final GameDatabaseDataSource datasource = new GameDatabaseDataSource();
+    private final ItemDaoJdbc itemDaoJdbc = new ItemDaoJdbc(datasource);
+    private final ActorDaoJdbc actorDaoJdbc = new ActorDaoJdbc(datasource, itemDaoJdbc);
+    private final CellDaoJdbc cellDaoJdbc = new CellDaoJdbc(datasource, actorDaoJdbc, itemDaoJdbc);
+
+    private final DatabaseLoader loader = new DatabaseLoader(cellDaoJdbc, actorDaoJdbc, itemDaoJdbc);
+    private final DatabaseSaver saver = new DatabaseSaver(cellDaoJdbc, actorDaoJdbc, itemDaoJdbc);
 
     public GameLogic() {
         this.map = MapLoader.loadMap(mapPaths.get(++currentMapIndex));
@@ -72,6 +84,25 @@ public class GameLogic {
             setGameOver();
         }
     }
+
+    public void loadSave(){
+        try{
+            GameMap savedMap = loader.loadMap();
+            currentMapIndex = mapPaths.indexOf(savedMap.getName());
+            map = savedMap;
+        } catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void saveGame() {
+        try {
+            saver.saveMap(map);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
     public Cell getCell(int x, int y) {
         return map.getCell(x, y);
