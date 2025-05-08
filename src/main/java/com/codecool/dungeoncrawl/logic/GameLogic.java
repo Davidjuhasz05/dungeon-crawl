@@ -13,6 +13,7 @@ import com.codecool.dungeoncrawl.data.actors.Enemy;
 import com.codecool.dungeoncrawl.data.item.weapon.Weapon;
 import com.codecool.dungeoncrawl.database.ActorDaoJdbc;
 import com.codecool.dungeoncrawl.database.CellDaoJdbc;
+import com.codecool.dungeoncrawl.database.GameDatabaseDataSource;
 import com.codecool.dungeoncrawl.database.ItemDaoJdbc;
 
 import java.util.Random;
@@ -25,9 +26,10 @@ public class GameLogic {
     private final List<String> mapPaths = List.of("/gameover.txt","/dungeon.txt", "/dungeon2.txt");
     private int currentMapIndex = 1;
     private final Random random = new Random();
-    private final CellDaoJdbc cellDaoJdbc = new CellDaoJdbc(/*DataSource*/);
-    private final ItemDaoJdbc itemDaoJdbc = new ItemDaoJdbc(/*DataSource*/);
-    private final ActorDaoJdbc actorDaoJdbc = new ActorDaoJdbc(/*DataSource*/, itemDaoJdbc);
+    private final GameDatabaseDataSource datasource = new GameDatabaseDataSource();
+    private final CellDaoJdbc cellDaoJdbc = new CellDaoJdbc(datasource);
+    private final ItemDaoJdbc itemDaoJdbc = new ItemDaoJdbc(datasource);
+    private final ActorDaoJdbc actorDaoJdbc = new ActorDaoJdbc(datasource, itemDaoJdbc);
     private final DatabaseLoader loader = new DatabaseLoader(cellDaoJdbc, actorDaoJdbc, itemDaoJdbc);
 
     public GameLogic() {

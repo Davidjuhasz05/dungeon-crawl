@@ -1,17 +1,16 @@
 package com.codecool.dungeoncrawl.database;
 
-import javax.sql.DataSource;
 import java.sql.*;
 
 public class CellDaoJdbc {
-    private final DataSource dataSource;
+    private final GameDatabaseDataSource dataSource;
 
-    public CellDaoJdbc(DataSource dataSource) {
+    public CellDaoJdbc(GameDatabaseDataSource dataSource) {
         this.dataSource = dataSource;
     }
 
     public int getMapWidth() throws SQLException {
-        try(Connection conn = dataSource.getConnection()){
+        try(Connection conn = dataSource.connect()){
             return conn.createStatement()
                     .executeQuery("select max(x) from map")
                     .getInt(1);
@@ -21,7 +20,7 @@ public class CellDaoJdbc {
     }
 
     public int getMapHeight() throws SQLException {
-        try(Connection conn = dataSource.getConnection()){
+        try(Connection conn = dataSource.connect()){
             return conn.createStatement()
                     .executeQuery("select max(y) from map")
                     .getInt(1);
@@ -31,7 +30,7 @@ public class CellDaoJdbc {
     }
 
     public String getMapName() throws SQLException {
-        try(Connection conn = dataSource.getConnection()){
+        try(Connection conn = dataSource.connect()){
             return conn.createStatement()
                     .executeQuery("select mapname from map limit 1")
                     .getString(1);
@@ -41,7 +40,7 @@ public class CellDaoJdbc {
     }
 
     public ResultSet getCellByCoordinates(int x, int y) throws SQLException {
-        try(Connection conn = dataSource.getConnection()){
+        try(Connection conn = dataSource.connect()){
             PreparedStatement statement = conn.prepareStatement("select cellType, actor, item from map where map.x = ? and map.y = ?");
             statement.setInt(1, x);
             statement.setInt(2, y);

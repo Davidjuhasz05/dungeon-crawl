@@ -7,20 +7,19 @@ import com.codecool.dungeoncrawl.data.actors.Skeleton;
 import com.codecool.dungeoncrawl.data.item.Item;
 import com.codecool.dungeoncrawl.data.item.weapon.Weapon;
 
-import javax.sql.DataSource;
 import java.sql.*;
 
 public class ActorDaoJdbc {
-    private final DataSource dataSource;
+    private final GameDatabaseDataSource dataSource;
     private final ItemDaoJdbc itemDaoJdbc;
 
-    public ActorDaoJdbc(DataSource dataSource, ItemDaoJdbc itemDaoJdbc) {
+    public ActorDaoJdbc(GameDatabaseDataSource dataSource, ItemDaoJdbc itemDaoJdbc) {
         this.dataSource = dataSource;
         this.itemDaoJdbc = itemDaoJdbc;
     }
 
     public Actor loadActor(Cell cell, String actorId) throws SQLException {
-        try(Connection conn = dataSource.getConnection()){
+        try(Connection conn = dataSource.connect()){
             Actor actor;
             PreparedStatement statement = conn.prepareStatement("select health, actorType, inventory, weapon from actor where actor.actor_id = ?");
             statement.setString(1, actorId);

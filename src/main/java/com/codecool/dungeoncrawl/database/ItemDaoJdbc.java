@@ -8,13 +8,12 @@ import com.codecool.dungeoncrawl.data.item.Item;
 import com.codecool.dungeoncrawl.data.item.Key;
 import com.codecool.dungeoncrawl.data.item.weapon.Sword;
 
-import javax.sql.DataSource;
 import java.sql.*;
 
 public class ItemDaoJdbc {
-    private final DataSource dataSource;
+    private final GameDatabaseDataSource dataSource;
 
-    public ItemDaoJdbc(final DataSource dataSource) {
+    public ItemDaoJdbc(GameDatabaseDataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -29,7 +28,7 @@ public class ItemDaoJdbc {
     }
 
     public Item loadItem(String itemId, Cell cell) throws SQLException {
-        try(Connection conn = dataSource.getConnection()){
+        try(Connection conn = dataSource.connect()){
             Item loadedItem;
             PreparedStatement statement = conn.prepareStatement("select item from item where itemId = ?");
             statement.setString(1, itemId);
