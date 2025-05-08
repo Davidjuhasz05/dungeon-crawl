@@ -23,7 +23,7 @@ public class ActorDaoJdbc {
     public Actor loadActor(Cell cell, int actorId) throws SQLException {
         try (Connection conn = dataSource.connect()) {
             Actor actor;
-            PreparedStatement statement = conn.prepareStatement("select health, actortype, inventory, weapon from actor where actor.id = ?");
+            PreparedStatement statement = conn.prepareStatement("select health, actortype, inventory, weapon, remainingsteps, visionrange from actor where actor.id = ?");
             statement.setInt(1, actorId);
             ResultSet results = statement.executeQuery();
             if (results.next()) {
@@ -31,9 +31,11 @@ public class ActorDaoJdbc {
                 String actorType = results.getString("actorType");
                 Array inventory = results.getArray("inventory");
                 int weapon = results.getInt("weapon");
+                int remainingsteps = results.getInt("remainingsteps");
+                int visionRange = results.getInt("visionrange");
                 switch (actorType) {
                     case "Player":
-                        actor = new Player(cell);
+                        actor = new Player(cell, remainingsteps, visionRange);
                         break;
                     case "Skeleton":
                         actor = new Skeleton(cell);

@@ -16,6 +16,7 @@ public class Player extends Actor {
     private static final int HEALTH_VALUE = 10;
     private static final int DAMAGE_VALUE = 5;
 
+
     private int visionRange;
     private int remainingSteps;
     private final List<Item> inventory = new ArrayList<>();
@@ -28,6 +29,16 @@ public class Player extends Actor {
         this.visionRange = DEFAULT_VISION_RANGE;
     }
 
+    public Player(Cell cell, int visionRange, int remainingSteps) {
+        this(cell);
+        if(visionRange<=0){
+            this.visionRange = DEFAULT_VISION_RANGE;
+        }else{
+            this.visionRange = visionRange;
+        }
+        this.remainingSteps = remainingSteps;
+
+    }
     @Override
     public MoveResult evaluateMove(int dx, int dy) {
 
@@ -146,5 +157,14 @@ public class Player extends Actor {
                 && x != visionRange
                 && y != visionRange;
     }
+
+    public void setVisionRange(int visionRange) {
+        this.visionRange = visionRange;
+    }
+
+    public void setRemainingSteps(int remainingSteps) {
+        this.remainingSteps = remainingSteps;
+    }
+
 
 }
