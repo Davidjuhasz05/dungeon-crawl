@@ -47,7 +47,7 @@ public class GameMap {
         return player;
     }
 
-    public void addEnemy(Skeleton enemy) {
+    public void addEnemy(Enemy enemy) {
         this.enemies.add(enemy);
     }
 

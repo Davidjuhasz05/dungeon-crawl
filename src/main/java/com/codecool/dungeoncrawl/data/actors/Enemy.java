@@ -13,7 +13,13 @@ public abstract class Enemy extends Actor {
 
     @Override
     public MoveResult evaluateMove(int dx, int dy) {
-        Cell nextCell = this.getCell().getNeighbor(dx, dy);
+        Cell nextCell;
+        try {
+            nextCell = this.getCell().getNeighbor(dx, dy);
+        } catch(ArrayIndexOutOfBoundsException e) {
+            return MoveResult.BLOCKED;
+        }
+
 
         if (nextCell.getType().isBlocked()) return MoveResult.BLOCKED;
 

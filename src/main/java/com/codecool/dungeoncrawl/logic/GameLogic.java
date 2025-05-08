@@ -71,7 +71,6 @@ public class GameLogic {
         if (map.getPlayer().getHealth() <= 0 || map.getPlayer().getCell() == null) {
             setGameOver();
         }
-
     }
 
     public Cell getCell(int x, int y) {
