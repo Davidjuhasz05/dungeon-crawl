@@ -39,6 +39,7 @@ public class Tiles {
         tileMap.put("torch", new Tile(4, 15));
         tileMap.put("quit", new Tile(22, 23));
         tileMap.put("animalSkull", new Tile(1, 15));
+        tileMap.put("skeletonSkull", new Tile(0, 15));
         tileMap.put("grass", new Tile(5, 0));
         tileMap.put("a", new Tile(19, 30)); tileMap.put("b", new Tile(20, 30)); tileMap.put("c", new Tile(21, 30));
         tileMap.put("d", new Tile(22, 30)); tileMap.put("e", new Tile(23, 30)); tileMap.put("f", new Tile(24, 30));

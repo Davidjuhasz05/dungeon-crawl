@@ -96,6 +96,9 @@ public class MapLoader {
             case '+':
                 cell.setType(CellType.PROP);
                 break;
+            case '*':
+                cell.setType(CellType.PROP2);
+                break;
             case '-':
                 cell.setType(CellType.GRASS);
                 break;

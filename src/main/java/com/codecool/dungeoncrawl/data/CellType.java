@@ -9,6 +9,7 @@ public enum CellType {
     RETRY("torch", true),
     QUIT("quit", true),
     PROP("animalSkull", true),
+    PROP2("skeletonSkull", true),
     GRASS("grass", true),
     A("a", true), B("b", true), C("c", true), D("d", true), E("e", true), F("f", true), G("g", true),
     H("h", true), I("i", true), J("j", true), K("k", true), L("l", true), M("m", true), N("n", true),
