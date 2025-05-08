@@ -75,7 +75,7 @@ public class DatabaseLoader {
                 }
             }
         } catch (SQLException e) {
-            throw new SQLException("Could not get cell from database");
+            throw new SQLException("Could not load map: " + e.getMessage());
         }
         return map;
     }

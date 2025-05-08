@@ -4,7 +4,9 @@ package com.codecool.dungeoncrawl.database;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.actors.Actor;
 import com.codecool.dungeoncrawl.data.actors.Player;
+import com.codecool.dungeoncrawl.data.actors.enemies.Golem;
 import com.codecool.dungeoncrawl.data.actors.enemies.Skeleton;
+import com.codecool.dungeoncrawl.data.actors.enemies.Spider;
 import com.codecool.dungeoncrawl.data.item.Item;
 import com.codecool.dungeoncrawl.data.item.weapon.Weapon;
 
@@ -40,6 +42,12 @@ public class ActorDaoJdbc {
                         break;
                     case "Skeleton":
                         actor = new Skeleton(cell);
+                        break;
+                    case "Spider":
+                        actor = new Spider(cell);
+                        break;
+                    case "Golem":
+                        actor = new Golem(cell);
                         break;
                     default:
                         actor = null;
