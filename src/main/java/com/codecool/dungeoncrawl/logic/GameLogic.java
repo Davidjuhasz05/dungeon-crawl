@@ -8,6 +8,7 @@ import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.item.Item;
 import java.util.List;
 import com.codecool.dungeoncrawl.data.actors.Enemy;
+import com.codecool.dungeoncrawl.data.item.weapon.Weapon;
 
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -16,8 +17,9 @@ import java.util.stream.Collectors;
 public class GameLogic {
     private GameMap map;
     private static final int MAX_STEP_RETRIES = 10;
-    private final List<String> mapPaths = List.of("/gameover.txt","/dungeon.txt", "/forest.txt");
+    private final List<String> mapPaths = List.of("/gameover.txt","/dungeon.txt", "/dungeon2.txt");
     private int currentMapIndex = 1;
+    private final Random random = new Random();
 
     public GameLogic() {
         this.map = MapLoader.loadMap(mapPaths.get(currentMapIndex++));
@@ -43,7 +45,6 @@ public class GameLogic {
 
     public void handleEnemiesTurn() {
         clearDeadEnemies();
-        Random random = new Random();
         for(Enemy enemy : map.getEnemies()) {
             int dx, dy;
             int movementRange = enemy.getMovementRange();
@@ -57,7 +58,6 @@ public class GameLogic {
                     case MOVE:
                         enemy.move(dx, dy);
                         isValidMove = true;
-
                         break;
                     case ATTACK:
                         enemy.attack(enemy.getNeighbourCellActor(dx, dy));
@@ -68,7 +68,7 @@ public class GameLogic {
                 }
             }
         }
-        if (map.getPlayer().getHealth() < 1 || map.getPlayer().getCell() == null) {
+        if (map.getPlayer().getHealth() <= 0 || map.getPlayer().getCell() == null) {
             setGameOver();
         }
 
@@ -79,15 +79,32 @@ public class GameLogic {
     }
 
     public int getPlayerHealth() {
-        return map.getPlayer().getHealth();
+      return map.getPlayer().getHealth();
+    }
+
+    public boolean isVisibleForPlayer(Cell cell) {
+        return map.getPlayer().isVisible(cell);
+    }
+
+    public boolean isVisibleForTorch(Cell cell) {
+        return map.getTorches().stream()
+                .anyMatch(t -> t.isVisible(cell));
     }
 
     public List<Item> getPlayerInventory(){
         return map.getPlayer().getInventory();
     }
 
+    public Weapon getPlayerWeapon(){
+        return map.getPlayer().getWeapon();
+    }
+
     public GameMap getMap() {
         return map;
+    }
+
+    public int getCurrentMapIndex() {
+        return currentMapIndex;
     }
 
     public void setNextMap() {
@@ -112,8 +129,8 @@ public class GameLogic {
     }
 
     public void setGameOver(){
-        this.map = MapLoader.loadMap(mapPaths.get(0));
+        currentMapIndex = 0;
+        this.map = MapLoader.loadMap(mapPaths.get(currentMapIndex));
     }
-
 
 }

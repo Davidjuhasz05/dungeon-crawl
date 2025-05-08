@@ -56,16 +56,31 @@ public class UI {
         for (int x = 0; x < logic.getMapWidth(); x++) {
             for (int y = 0; y < logic.getMapHeight(); y++) {
                 Cell cell = logic.getCell(x, y);
-                if (cell.getActor() != null) {
-                    Tiles.drawTile(context, cell.getActor(), x, y);
-                } else if(cell.getItem() != null) {
-                    Tiles.drawTile(context, cell.getItem(), x, y);
+                if(logic.getCurrentMapIndex() != 0) {
+                    if(logic.isVisibleForPlayer(cell) || logic.isVisibleForTorch(cell)) {
+                        drawTiles(cell, x, y);
+                    }
                 } else {
-                    Tiles.drawTile(context, cell, x, y);
+                    drawTiles(cell, x, y);
                 }
             }
         }
+
         mainStage.setHealthLabelValue(logic.getPlayerHealth());
         mainStage.setInventoryLabelText(logic.getPlayerInventory());
+
+        if(logic.getPlayerWeapon() != null){
+            mainStage.setWeaponLabelValue(logic.getPlayerWeapon());
+        }
+    }
+
+    private void drawTiles(Cell cell, int x, int y) {
+        if (cell.getActor() != null) {
+            Tiles.drawTile(context, cell.getActor(), x, y);
+        } else if(cell.getItem() != null) {
+            Tiles.drawTile(context, cell.getItem(), x, y);
+        } else {
+            Tiles.drawTile(context, cell, x, y);
+        }
     }
 }
