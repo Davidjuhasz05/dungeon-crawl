@@ -58,58 +58,14 @@ public class CellDaoJdbc {
         }
     }
 
-    public Actor loadActor(Cell cell, String actorId) throws SQLException {
-        Actor actor;
-        try(Connection conn = dataSource.getConnection()){
-            PreparedStatement statement = conn.prepareStatement("select health, actorType, inventory, weapon from actor where actor.actor_id = ?");
-            statement.setString(1, actorId);
-            ResultSet results = statement.executeQuery();
-            int health = results.getInt("health");
-            String actorType = results.getString("actorType");
-            Array inventory = results.getArray("inventory");
-            String weapon = results.getString("weapon");
-            switch(actorType){
-                case "player":
-                    actor = new Player(cell);
-                    break;
-                case "skeleton":
-                    actor = new Skeleton(cell);
-                    break;
-                default:
-                    actor = null;
-            }
-            if(actor == null){
-                throw new SQLException("Could not load actor " + actorId);
-            }
-            actor.setHealth(health);
-            if(inventory != null && actor instanceof Player){
-                loadInventory((Player) actor, inventory);
-            }
-            if(weapon != null && actor instanceof Player){
-                Item loadedWeapon = loadItem(weapon);
-                if(loadedWeapon instanceof Weapon){
-                    ((Player) actor).addWeapon((Weapon) loadedWeapon);
-                }
-            }
-        } catch(SQLException e) {
-            throw new SQLException("Could not load actor " + actorId);
-        }
-        return actor;
+    //Save
+
+    public void saveCell(Cell cell){
+
+
     }
 
-    private void loadInventory(Player player, Array inventory) throws SQLException {
-        String[] inventoryItemIds = (String[]) inventory.getArray();
-        for(String itemId : inventoryItemIds){
-            player.addToInventory(loadItem(itemId));
-        }
-    }
 
-    public Item loadItem(String itemId) throws SQLException {
-        try(Connection conn = dataSource.getConnection()){
-            
-        } catch(SQLException e) {
-            throw new SQLException("Could not load item " + itemId);
-        }
-    }
+
 
 }
