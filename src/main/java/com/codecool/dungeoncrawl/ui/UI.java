@@ -3,7 +3,9 @@ package com.codecool.dungeoncrawl.ui;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.logic.GameLogic;
 import com.codecool.dungeoncrawl.ui.elements.MainStage;
+import com.codecool.dungeoncrawl.ui.keyeventhandler.DirectionsKeyHandler;
 import com.codecool.dungeoncrawl.ui.keyeventhandler.KeyHandler;
+import com.codecool.dungeoncrawl.ui.keyeventhandler.Load;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -42,9 +44,12 @@ public class UI {
 
     private void onKeyPressed(KeyEvent keyEvent) {
         for (KeyHandler keyHandler : keyHandlers) {
-            boolean hasMoved = keyHandler.perform(keyEvent, logic.getMap());
-            if(hasMoved){
+            boolean actionHappened = keyHandler.perform(keyEvent, logic.getMap());
+            if(actionHappened && keyHandler instanceof DirectionsKeyHandler){
                 logic.handleNextTurn();
+            }
+            if(actionHappened && keyHandler instanceof Load){
+                logic.loadSave();
             }
         }
         refresh();
