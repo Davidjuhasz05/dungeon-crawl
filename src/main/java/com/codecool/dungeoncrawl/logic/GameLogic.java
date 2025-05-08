@@ -24,7 +24,7 @@ public class GameLogic {
     private GameMap map;
     private static final int MAX_STEP_RETRIES = 10;
     private final List<String> mapPaths = List.of("/gameover.txt","/dungeon.txt", "/dungeon2.txt");
-    private int currentMapIndex = 1;
+    private int currentMapIndex = 0;
     private final Random random = new Random();
     private final GameDatabaseDataSource datasource = new GameDatabaseDataSource();
     private final ItemDaoJdbc itemDaoJdbc = new ItemDaoJdbc(datasource);
@@ -35,7 +35,7 @@ public class GameLogic {
     private final DatabaseSaver saver = new DatabaseSaver(cellDaoJdbc, actorDaoJdbc, itemDaoJdbc);
 
     public GameLogic() {
-        this.map = MapLoader.loadMap(mapPaths.get(currentMapIndex++));
+        this.map = MapLoader.loadMap(mapPaths.get(++currentMapIndex));
     }
 
     public double getMapWidth() {
@@ -141,7 +141,7 @@ public class GameLogic {
 
     public void setNextMap() {
         Player currentPlayer = map.getPlayer();
-        this.map = MapLoader.loadMap(mapPaths.get(currentMapIndex++));
+        this.map = MapLoader.loadMap(mapPaths.get(++currentMapIndex));
         Player newPlayer = map.getPlayer();
         currentPlayer.setCell(newPlayer.getCell());
         newPlayer.getCell().setActor(null);
