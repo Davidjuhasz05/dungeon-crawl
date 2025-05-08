@@ -8,6 +8,8 @@ import com.codecool.dungeoncrawl.data.item.Item;
 import com.codecool.dungeoncrawl.data.item.weapon.Weapon;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ActorDaoJdbc {
     private final GameDatabaseDataSource dataSource;
@@ -61,20 +63,54 @@ public class ActorDaoJdbc {
 
     public int saveActor(Actor actor) {
         try (Connection conn = dataSource.connect()) {
+            Integer weaponId = null;
+            Integer[] inventoryIds = null;
+
+
+            if (actor instanceof Player) {
+                Player player = (Player) actor;
+                if (player.getWeapon() != null) {
+                    weaponId = itemDaoJdbc.saveItem(player.getWeapon());
+                }
+
+                if (!player.getInventory().isEmpty()) {
+                    List<Integer> ids = new ArrayList<>();
+                    for (Item item : player.getInventory()) {
+                        int id = itemDaoJdbc.saveItem(item);
+                        ids.add(id);
+                    }
+                    inventoryIds = ids.toArray(new Integer[0]);
+                }
+            }
+
             PreparedStatement stmt = conn.prepareStatement(
-                    "INSERT INTO actor (health, actorType) VALUES (?, ?) RETURNING id"
+                    "INSERT INTO actor (health, actorType, weapon, inventory) VALUES (?, ?, ?, ?) RETURNING id"
             );
             stmt.setInt(1, actor.getHealth());
-            stmt.setString(2, actor.getTileName());
+            stmt.setString(2, actor.getClass().getSimpleName());
+
+            if (weaponId != null) {
+                stmt.setInt(3, weaponId);
+            } else {
+                stmt.setNull(3, Types.INTEGER);
+            }
+
+            if (inventoryIds != null) {
+                Array sqlArray = conn.createArrayOf("INTEGER", inventoryIds);
+                stmt.setArray(4, sqlArray);
+            } else {
+                stmt.setNull(4, Types.ARRAY);
+            }
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return rs.getInt(1);
+                return rs.getInt("id");
             } else {
-                throw new SQLException("Failed to insert actor");
+                throw new SQLException("Failed to insert actor.");
             }
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error saving actor", e);
         }
     }
 
