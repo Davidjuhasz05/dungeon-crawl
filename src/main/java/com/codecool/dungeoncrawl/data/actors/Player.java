@@ -158,6 +158,14 @@ public class Player extends Actor {
                 && y != visionRange;
     }
 
+    public int getRemainingSteps() {
+        return remainingSteps;
+    }
+
+    public int getVisionRange() {
+        return visionRange;
+    }
+
     public void setVisionRange(int visionRange) {
         this.visionRange = visionRange;
     }

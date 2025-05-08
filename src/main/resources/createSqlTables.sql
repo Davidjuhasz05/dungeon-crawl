@@ -6,18 +6,20 @@ DROP TABLE IF EXISTS item;
 -- Create item table
 CREATE TABLE item
 (
-    id       SERIAL PRIMARY KEY,
-    item VARCHAR(50)  NOT NULL
+    id   SERIAL PRIMARY KEY,
+    item VARCHAR(50) NOT NULL
 );
 
 -- Create actor table
 CREATE TABLE actor
 (
-    id        SERIAL PRIMARY KEY,
-    health    INTEGER     NOT NULL,
-    actorType VARCHAR(50) NOT NULL,
-    weapon    INTEGER REFERENCES item (id),
-    inventory INTEGER[]
+    id             SERIAL PRIMARY KEY,
+    health         INTEGER     NOT NULL,
+    actorType      VARCHAR(50) NOT NULL,
+    weapon         INTEGER REFERENCES item (id),
+    inventory      INTEGER[],
+    remainingsteps INTEGER,
+    visionrange    INTEGER
 );
 
 -- Create map table

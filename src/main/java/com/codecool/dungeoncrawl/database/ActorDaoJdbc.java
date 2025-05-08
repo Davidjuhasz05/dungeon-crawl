@@ -35,7 +35,7 @@ public class ActorDaoJdbc {
                 int visionRange = results.getInt("visionrange");
                 switch (actorType) {
                     case "Player":
-                        actor = new Player(cell, remainingsteps, visionRange);
+                        actor = new Player(cell, visionRange, remainingsteps);
                         break;
                     case "Skeleton":
                         actor = new Skeleton(cell);
@@ -70,7 +70,8 @@ public class ActorDaoJdbc {
         try (Connection conn = dataSource.connect()) {
             Integer weaponId = null;
             Integer[] inventoryIds = null;
-
+            int remainingSteps = -1;
+            int visionRange = -1;
 
             if (actor instanceof Player) {
                 Player player = (Player) actor;
@@ -86,10 +87,12 @@ public class ActorDaoJdbc {
                     }
                     inventoryIds = ids.toArray(new Integer[0]);
                 }
+                remainingSteps = player.getRemainingSteps();
+                visionRange = player.getVisionRange();
             }
 
             PreparedStatement stmt = conn.prepareStatement(
-                    "INSERT INTO actor (health, actorType, weapon, inventory) VALUES (?, ?, ?, ?) RETURNING id"
+                    "INSERT INTO actor (health, actorType, weapon, inventory, remainingsteps, visionrange) VALUES (?, ?, ?, ?, ?, ?) RETURNING id"
             );
             stmt.setInt(1, actor.getHealth());
             stmt.setString(2, actor.getClass().getSimpleName());
@@ -106,6 +109,17 @@ public class ActorDaoJdbc {
             } else {
                 stmt.setNull(4, Types.ARRAY);
             }
+            if (remainingSteps >= 0) {
+                stmt.setInt(5, remainingSteps);
+            } else {
+                stmt.setNull(5, Types.INTEGER);
+            }
+            if (visionRange >= 0) {
+                stmt.setInt(6, visionRange);
+            } else {
+                stmt.setNull(6, Types.INTEGER);
+            }
+
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
