@@ -155,6 +155,7 @@ public class GameLogic {
             case DOOR:
                 if(player.hasKey()) {
                     setNextMap(player);
+                    player.removeKey();
                 }
                 break;
             case RETRY:
