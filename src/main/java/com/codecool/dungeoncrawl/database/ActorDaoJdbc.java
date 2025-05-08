@@ -78,4 +78,13 @@ public class ActorDaoJdbc {
         }
     }
 
+    public void clearActors() throws SQLException {
+        try(Connection conn = dataSource.connect()){
+            String sql= "DELETE FROM actor";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.executeUpdate();
+        } catch(SQLException e) {
+            throw new SQLException("couldnt cleaer actor");
+        }
+    }
 }

@@ -74,4 +74,13 @@ public class ItemDaoJdbc {
         }
     }
 
+    public void clearItems() throws SQLException {
+        try(Connection conn = dataSource.connect()){
+            String sql= "DELETE FROM item";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.executeUpdate();
+        } catch(SQLException e) {
+            throw new SQLException("couldnt cleaer map");
+        }
+    }
 }

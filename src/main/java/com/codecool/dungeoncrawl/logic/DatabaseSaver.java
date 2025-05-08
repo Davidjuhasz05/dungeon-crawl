@@ -22,6 +22,7 @@ public class DatabaseSaver {
 
     public void saveMap(GameMap map) {
         try {
+            cellDao.clearTables();
             cellDao.saveCells(map);
         } catch (SQLException e) {
             System.out.println("Saving failed" + e.getMessage());

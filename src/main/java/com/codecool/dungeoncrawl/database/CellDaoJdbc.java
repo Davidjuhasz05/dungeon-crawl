@@ -101,5 +101,15 @@ public class CellDaoJdbc {
     }
 
 
-
+    public void clearTables() throws SQLException {
+        try(Connection conn = dataSource.connect()){
+            String sql= "DELETE FROM map";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.executeUpdate();
+            itemDaoJdbc.clearItems();
+            actorDaoJdbc.clearActors();
+        } catch(SQLException e) {
+            throw new SQLException("could't clear tables");
+        }
+    }
 }
