@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.data;
 
 import com.codecool.dungeoncrawl.data.actors.Enemy;
 import com.codecool.dungeoncrawl.data.actors.Player;
+import com.codecool.dungeoncrawl.data.item.Torch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ public class GameMap {
     private final Cell[][] cells;
     private final List<Enemy> enemies = new ArrayList<>();
     private Player player;
+    private final List<Torch> torches = new ArrayList<>();
 
     public GameMap(int width, int height, CellType defaultCellType, String name) {
         this.name = name;
@@ -28,6 +30,14 @@ public class GameMap {
 
     public Cell getCell(int x, int y) {
         return cells[x][y];
+    }
+
+    public List<Torch> getTorches() {
+        return torches;
+    }
+
+    public void addTorch(Torch torch) {
+        this.torches.add(torch);
     }
 
     public void setPlayer(Player player) {

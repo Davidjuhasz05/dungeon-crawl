@@ -5,4 +5,5 @@ public enum ItemType {
     ARMOR,
     POTION,
     ACCESS,
+    TORCH
 }

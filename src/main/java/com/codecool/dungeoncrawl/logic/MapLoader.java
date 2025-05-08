@@ -17,7 +17,6 @@ public class MapLoader {
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
         int height = scanner.nextInt();
-
         scanner.nextLine(); // empty line
 
         GameMap map = new GameMap(width, height, CellType.EMPTY, mapPath);
@@ -67,6 +66,10 @@ public class MapLoader {
                 cell.setType(CellType.FLOOR);
                 new HealthPotion(cell);
                 break;
+            case 't':
+                cell.setType(CellType.FLOOR);
+                map.addTorch(new Torch(cell));
+                break;
             case '@':
                 cell.setType(CellType.FLOOR);
                 map.setPlayer(new Player(cell));
@@ -75,7 +78,7 @@ public class MapLoader {
                 cell.setType(CellType.DOOR);
                 break;
             case '0':
-                cell.setType(CellType.EXIT);
+                cell.setType(CellType.QUIT);
                 break;
             case '1':
                 cell.setType(CellType.RETRY);

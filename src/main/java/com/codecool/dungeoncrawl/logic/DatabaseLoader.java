@@ -6,14 +6,22 @@ import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.actors.Actor;
 import com.codecool.dungeoncrawl.data.actors.Enemy;
 import com.codecool.dungeoncrawl.data.actors.Player;
+import com.codecool.dungeoncrawl.database.ActorDaoJdbc;
+import com.codecool.dungeoncrawl.database.CellDaoJdbc;
+import com.codecool.dungeoncrawl.database.ItemDaoJdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DatabaseLoader {
     private final CellDaoJdbc cellDao;
-    public DatabaseLoader(CellDaoJdbc cellDaoJdbc) {
+    private final ActorDaoJdbc actorDao;
+    private final ItemDaoJdbc itemDao;
+
+    public DatabaseLoader(CellDaoJdbc cellDaoJdbc, ActorDaoJdbc actorDaoJdbc, ItemDaoJdbc itemDaoJdbc) {
         cellDao = cellDaoJdbc;
+        actorDao = actorDaoJdbc;
+        itemDao = itemDaoJdbc;
     }
 
     public GameMap loadMap() throws SQLException {
@@ -46,7 +54,7 @@ public class DatabaseLoader {
                 cell.setType(CellType.valueOf(cellType));
                 if(actorId != null){
                     try{
-                        Actor actor = cellDao.loadActor(cell, actorId);
+                        Actor actor = actorDao.loadActor(cell, actorId);
                         if(actor instanceof Player){
                             map.setPlayer((Player) actor);
                         } else{
@@ -58,7 +66,7 @@ public class DatabaseLoader {
                 }
                 if(itemId != null){
                     try{
-                        cellDao.loadItem(itemId, cell);
+                        itemDao.loadItem(itemId, cell);
                     } catch (SQLException e) {
                         throw new SQLException("Could not load item from database");
                     }

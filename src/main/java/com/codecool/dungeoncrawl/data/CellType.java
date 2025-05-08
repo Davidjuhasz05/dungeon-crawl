@@ -7,7 +7,7 @@ public enum CellType {
     WALL("wall", false),
     DOOR("door", true),
     RETRY("torch", true),
-    EXIT("exit", true),
+    QUIT("quit", true),
     PROP("animalSkull", true),
     GRASS("grass", true),
     A("a", true), B("b", true), C("c", true), D("d", true), E("e", true), F("f", true), G("g", true),

@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.ui.elements;
 
 import com.codecool.dungeoncrawl.data.item.Item;
+import com.codecool.dungeoncrawl.data.item.weapon.Weapon;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.BorderPane;
@@ -35,4 +36,9 @@ public class MainStage {
     public void setInventoryLabelText(List<Item> inventory){
         this.statusPane.setInventoryValue(inventory);
     }
+
+    public void setWeaponLabelValue(Weapon weapon){
+        this.statusPane.setWeaponValue(weapon);
+    }
+
 }
