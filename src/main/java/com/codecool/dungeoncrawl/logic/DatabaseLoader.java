@@ -37,19 +37,14 @@ public class DatabaseLoader {
         }
 
         GameMap map = new GameMap(width, height, CellType.EMPTY, mapName);
-        for(int x = 0; x < height; x++){
-            for(int y = 0; y < width; y++){
-                String cellType;
-                String actorId;
-                String itemId;
-                try{
-                    ResultSet results = cellDao.getCellByCoordinates(x, y);
-                    cellType = results.getString("cellType");
-                    actorId = results.getString("actor");
-                    itemId = results.getString("item");
-                } catch (SQLException e){
-                    throw new SQLException("Could not get cell from database");
-                }
+        try{
+            ResultSet results = cellDao.getCells();
+            while(results.next()){
+                String cellType = results.getString("cellType");
+                String actorId = results.getString("actor");
+                String itemId = results.getString("item");
+                int x = results.getInt("x");
+                int y = results.getInt("y");
                 Cell cell = map.getCell(x, y);
                 cell.setType(CellType.valueOf(cellType));
                 if(actorId != null){
@@ -73,8 +68,9 @@ public class DatabaseLoader {
 
                 }
             }
+        } catch (SQLException e){
+            throw new SQLException("Could not get cell from database");
         }
-
         return map;
     }
 }

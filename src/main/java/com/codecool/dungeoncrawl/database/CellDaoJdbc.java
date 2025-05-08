@@ -39,14 +39,12 @@ public class CellDaoJdbc {
         }
     }
 
-    public ResultSet getCellByCoordinates(int x, int y) throws SQLException {
+    public ResultSet getCells() throws SQLException {
         try(Connection conn = dataSource.connect()){
-            PreparedStatement statement = conn.prepareStatement("select celltype, actor, item from map where map.x = ? and map.y = ?");
-            statement.setInt(1, x);
-            statement.setInt(2, y);
+            PreparedStatement statement = conn.prepareStatement("select celltype, actor, item, x, y from map");
             return statement.executeQuery();
         } catch(SQLException e) {
-            throw new SQLException("Could not get cell");
+            throw new SQLException("Could not get cells");
         }
     }
 }
