@@ -56,12 +56,12 @@ public class UI {
         for (int x = 0; x < logic.getMapWidth(); x++) {
             for (int y = 0; y < logic.getMapHeight(); y++) {
                 Cell cell = logic.getCell(x, y);
-                if(logic.getCurrentMapIndex() != 0) {
+                if(logic.getCurrentMapIndex() != 0 && logic.getCurrentMapIndex() != 3) {
                     if(logic.isVisibleForPlayer(cell) || logic.isVisibleForTorch(cell)) {
-                        drawTiles(cell, x, y);
+                        drawTile(cell, x, y);
                     }
                 } else {
-                    drawTiles(cell, x, y);
+                    drawTile(cell, x, y);
                 }
             }
         }
@@ -74,7 +74,7 @@ public class UI {
         }
     }
 
-    private void drawTiles(Cell cell, int x, int y) {
+    private void drawTile(Cell cell, int x, int y) {
         if (cell.getActor() != null) {
             Tiles.drawTile(context, cell.getActor(), x, y);
         } else if(cell.getItem() != null) {

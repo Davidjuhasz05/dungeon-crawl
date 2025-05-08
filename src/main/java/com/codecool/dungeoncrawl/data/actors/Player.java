@@ -13,7 +13,7 @@ public class Player extends Actor {
     private static final int DEFAULT_VISION_RANGE = 3;
     private static final int TORCH_VISION_RANGE = 5;
     private static final int TORCH_REMAINING_STEPS = 35;
-    private static final int HEALTH_VALUE = 10;
+    private static final int HEALTH_VALUE = 100;
     private static final int DAMAGE_VALUE = 5;
 
     private int visionRange;

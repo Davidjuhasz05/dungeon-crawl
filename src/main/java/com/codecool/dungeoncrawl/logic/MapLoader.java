@@ -48,6 +48,9 @@ public class MapLoader {
             case ',':
                 cell.setType(CellType.FLOOR2);
                 break;
+            case '_':
+                cell.setType(CellType.FLOOR3);
+                break;
             case 's':
                 cell.setType(CellType.FLOOR);
                 map.addEnemy(new Skeleton(cell));
