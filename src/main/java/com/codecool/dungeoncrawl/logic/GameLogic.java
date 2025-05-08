@@ -137,8 +137,7 @@ public class GameLogic {
         return currentMapIndex;
     }
 
-    public void setNextMap() {
-        Player currentPlayer = map.getPlayer();
+    public void setNextMap(Player currentPlayer) {
         this.map = MapLoader.loadMap(mapPaths.get(++currentMapIndex));
         Player newPlayer = map.getPlayer();
         currentPlayer.setCell(newPlayer.getCell());
@@ -151,10 +150,23 @@ public class GameLogic {
     public void handleNextTurn() {
         Player player = map.getPlayer();
         Cell playerPos = player.getCell();
-        if(playerPos.getType().equals(CellType.DOOR) && player.hasKey()) {
-            setNextMap();
-        } else {
-            handleEnemiesTurn();
+
+        switch(playerPos.getType()) {
+            case DOOR:
+                if(player.hasKey()) {
+                    setNextMap(player);
+                }
+                break;
+            case RETRY:
+                currentMapIndex = 0;
+                setNextMap(new Player(playerPos));
+                break;
+            case QUIT:
+                System.exit(0);
+                break;
+            default:
+                handleEnemiesTurn();
+                break;
         }
     }
 
