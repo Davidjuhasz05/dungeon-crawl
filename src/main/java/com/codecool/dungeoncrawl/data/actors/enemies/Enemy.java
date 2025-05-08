@@ -1,6 +1,9 @@
-package com.codecool.dungeoncrawl.data.actors;
+package com.codecool.dungeoncrawl.data.actors.enemies;
 
 import com.codecool.dungeoncrawl.data.Cell;
+import com.codecool.dungeoncrawl.data.CellType;
+import com.codecool.dungeoncrawl.data.actors.Actor;
+import com.codecool.dungeoncrawl.data.actors.MoveResult;
 import com.codecool.dungeoncrawl.data.item.Item;
 
 public abstract class Enemy extends Actor {
@@ -20,8 +23,8 @@ public abstract class Enemy extends Actor {
             return MoveResult.BLOCKED;
         }
 
-
-        if (nextCell.getType().isBlocked()) return MoveResult.BLOCKED;
+        CellType nextCellType = nextCell.getType();
+        if (nextCellType.isBlocked() || nextCellType.equals(CellType.DOOR)) return MoveResult.BLOCKED;
 
         Actor target = nextCell.getActor();
         Item targetItem = nextCell.getItem();

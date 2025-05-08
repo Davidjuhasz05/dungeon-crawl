@@ -4,8 +4,9 @@ import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.actors.Player;
-import com.codecool.dungeoncrawl.data.actors.Skeleton;
-import com.codecool.dungeoncrawl.data.actors.Spider;
+import com.codecool.dungeoncrawl.data.actors.enemies.Golem;
+import com.codecool.dungeoncrawl.data.actors.enemies.Skeleton;
+import com.codecool.dungeoncrawl.data.actors.enemies.Spider;
 import com.codecool.dungeoncrawl.data.item.*;
 import com.codecool.dungeoncrawl.data.item.weapon.Sword;
 
@@ -54,6 +55,10 @@ public class MapLoader {
             case 'v':
                 cell.setType(CellType.FLOOR);
                 map.addEnemy(new Spider(cell));
+                break;
+            case 'g':
+                cell.setType(CellType.FLOOR);
+                map.addEnemy(new Golem(cell));
                 break;
             case 'w':
                 cell.setType(CellType.FLOOR);

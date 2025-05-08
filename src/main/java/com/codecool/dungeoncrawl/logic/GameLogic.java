@@ -7,7 +7,7 @@ import com.codecool.dungeoncrawl.data.actors.MoveResult;
 import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.item.Item;
 import java.util.List;
-import com.codecool.dungeoncrawl.data.actors.Enemy;
+import com.codecool.dungeoncrawl.data.actors.enemies.Enemy;
 import com.codecool.dungeoncrawl.data.item.weapon.Weapon;
 
 import java.util.Random;
