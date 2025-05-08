@@ -30,21 +30,21 @@ public class ItemDaoJdbc {
     public Item loadItem(String itemId, Cell cell) throws SQLException {
         try(Connection conn = dataSource.connect()){
             Item loadedItem;
-            PreparedStatement statement = conn.prepareStatement("select item from item where itemId = ?");
+            PreparedStatement statement = conn.prepareStatement("select item from item where id = ?");
             statement.setString(1, itemId);
             ResultSet results = statement.executeQuery();
             String itemType = results.getString("item");
             switch(itemType){
-                case "sword":
+                case "Sword":
                     loadedItem = new Sword(cell);
                     break;
-                case "armor":
+                case "Armor":
                     loadedItem = new Armor(cell);
                     break;
-                case "healthPotion":
+                case "Health Potion":
                     loadedItem = new HealthPotion(cell);
                     break;
-                case "key":
+                case "Key":
                     loadedItem = new Key(cell);
                     break;
                 default:

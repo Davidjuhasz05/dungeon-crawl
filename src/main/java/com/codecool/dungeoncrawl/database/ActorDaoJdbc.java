@@ -21,7 +21,7 @@ public class ActorDaoJdbc {
     public Actor loadActor(Cell cell, String actorId) throws SQLException {
         try(Connection conn = dataSource.connect()){
             Actor actor;
-            PreparedStatement statement = conn.prepareStatement("select health, actorType, inventory, weapon from actor where actor.actor_id = ?");
+            PreparedStatement statement = conn.prepareStatement("select health, actortype, inventory, weapon from actor where actor.id = ?");
             statement.setString(1, actorId);
             ResultSet results = statement.executeQuery();
             int health = results.getInt("health");

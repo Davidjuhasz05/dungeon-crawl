@@ -93,7 +93,6 @@ public class GameLogic {
         } catch(SQLException e){
             System.out.println(e.getMessage());
         }
-
     }
 
     public Cell getCell(int x, int y) {

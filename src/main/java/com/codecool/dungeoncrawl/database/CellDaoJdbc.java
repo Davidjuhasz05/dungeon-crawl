@@ -41,7 +41,7 @@ public class CellDaoJdbc {
 
     public ResultSet getCellByCoordinates(int x, int y) throws SQLException {
         try(Connection conn = dataSource.connect()){
-            PreparedStatement statement = conn.prepareStatement("select cellType, actor, item from map where map.x = ? and map.y = ?");
+            PreparedStatement statement = conn.prepareStatement("select celltype, actor, item from map where map.x = ? and map.y = ?");
             statement.setInt(1, x);
             statement.setInt(2, y);
             return statement.executeQuery();

@@ -8,6 +8,6 @@ public class Load implements KeyHandler {
 
     @Override
     public boolean perform(KeyEvent event, GameMap map) {
-        return event.getCode() == KeyCode.S;
+        return event.getCode() == KeyCode.L;
     }
 }
