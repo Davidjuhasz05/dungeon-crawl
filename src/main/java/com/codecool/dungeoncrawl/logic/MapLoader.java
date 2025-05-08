@@ -11,9 +11,11 @@ import com.codecool.dungeoncrawl.data.item.*;
 import com.codecool.dungeoncrawl.data.item.weapon.Sword;
 
 import java.io.InputStream;
+import java.util.Random;
 import java.util.Scanner;
 
 public class MapLoader {
+    private static final Random RANDOM = new Random();
     public static GameMap loadMap(String mapPath) {
         InputStream is = MapLoader.class.getResourceAsStream(mapPath);
         Scanner scanner = new Scanner(is);
@@ -105,6 +107,12 @@ public class MapLoader {
             case '-':
                 cell.setType(CellType.GRASS);
                 break;
+            case 'o':
+                int randomNumber = RANDOM.nextInt(2);
+                cell.setType(randomNumber == 0 ? CellType.CANOPY1 : CellType.CANOPY2);
+                break;
+            case 'i':
+                cell.setType(CellType.TRUNK1);
             default:
                 if(c >= 'A' && c <= 'Z') {
                     cell.setType(CellType.valueOf(String.valueOf(c)));

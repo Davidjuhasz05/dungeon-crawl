@@ -41,6 +41,9 @@ public class Tiles {
         tileMap.put("animalSkull", new Tile(1, 15));
         tileMap.put("skeletonSkull", new Tile(0, 15));
         tileMap.put("grass", new Tile(5, 0));
+        tileMap.put("trunk1", new Tile(6, 19));
+        tileMap.put("canopy1", new Tile(5, 19));
+        tileMap.put("canopy2", new Tile(5, 20));
         tileMap.put("a", new Tile(19, 30)); tileMap.put("b", new Tile(20, 30)); tileMap.put("c", new Tile(21, 30));
         tileMap.put("d", new Tile(22, 30)); tileMap.put("e", new Tile(23, 30)); tileMap.put("f", new Tile(24, 30));
         tileMap.put("g", new Tile(25, 30)); tileMap.put("h", new Tile(26, 30)); tileMap.put("i", new Tile(27, 30));
