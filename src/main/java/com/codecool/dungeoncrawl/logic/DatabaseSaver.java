@@ -1,11 +1,17 @@
-import com.codecool.dungeoncrawl.logic.CellDaoJdbc;
+package com.codecool.dungeoncrawl.logic;
 
-public class GameSaverPostgres {
+import com.codecool.dungeoncrawl.data.Cell;
+import com.codecool.dungeoncrawl.data.GameMap;
+import com.codecool.dungeoncrawl.database.ActorDaoJdbc;
+import com.codecool.dungeoncrawl.database.CellDaoJdbc;
+import com.codecool.dungeoncrawl.database.ItemDaoJdbc;
+
+public class DatabaseSaver {
     private final CellDaoJdbc cellDao;
     private final ActorDaoJdbc actorDao;
     private final ItemDaoJdbc itemDao;
 
-    public GameSaverPostgres(CellDaoJdbc cellDao, ActorDaoJdbc actorDao, ItemDaoJdbc itemDao) {
+    public DatabaseSaver(CellDaoJdbc cellDao, ActorDaoJdbc actorDao, ItemDaoJdbc itemDao) {
         this.cellDao = cellDao;
         this.actorDao = actorDao;
         this.itemDao = itemDao;
@@ -15,12 +21,6 @@ public class GameSaverPostgres {
         for (int y = 0; y < map.getHeight(); y++) {
             for (int x = 0; x < map.getWidth(); x++) {
                 Cell cell = map.getCell(x, y);
-                if (cell.getItem() != null) {
-                    itemDao.saveItem(cell.getItem());
-                }
-                if (cell.getActor() != null) {
-                    actorDao.saveActor(cell.getActor());
-                }
                 cellDao.saveCell(cell, x, y);
             }
         }

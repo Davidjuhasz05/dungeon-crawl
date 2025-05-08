@@ -58,4 +58,24 @@ public class ActorDaoJdbc {
             throw new SQLException("Could not load actor " + actorId);
         }
     }
+
+    public int saveActor(Actor actor) {
+        try (Connection conn = dataSource.connect()) {
+            PreparedStatement stmt = conn.prepareStatement(
+                    "INSERT INTO actor (health, actorType) VALUES (?, ?) RETURNING id"
+            );
+            stmt.setInt(1, actor.getHealth());
+            stmt.setString(2, actor.getTileName());
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            } else {
+                throw new SQLException("Failed to insert actor");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

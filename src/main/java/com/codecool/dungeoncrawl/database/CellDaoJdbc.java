@@ -1,12 +1,18 @@
 package com.codecool.dungeoncrawl.database;
 
+import com.codecool.dungeoncrawl.data.Cell;
+
 import java.sql.*;
 
 public class CellDaoJdbc {
     private final GameDatabaseDataSource dataSource;
+    private final ActorDaoJdbc actorDaoJdbc;
+    private final ItemDaoJdbc itemDaoJdbc;
 
-    public CellDaoJdbc(GameDatabaseDataSource dataSource) {
+    public CellDaoJdbc(GameDatabaseDataSource dataSource, ActorDaoJdbc actorDaoJdbc, ItemDaoJdbc itemDaoJdbc) {
         this.dataSource = dataSource;
+        this.actorDaoJdbc = actorDaoJdbc;
+        this.itemDaoJdbc = itemDaoJdbc;
     }
 
     public int getMapWidth() throws SQLException {
@@ -49,4 +55,39 @@ public class CellDaoJdbc {
             throw new SQLException("Could not get cell");
         }
     }
+
+    public void saveCell(Cell cell, int x, int y) {
+        try (Connection conn = dataSource.connect()) {
+            PreparedStatement statement = conn.prepareStatement(
+                    "INSERT INTO map (mapName, x, y, cellType, actor, item) VALUES (?, ?, ?, ?, ?, ?)"
+            );
+
+            statement.setString(1, cell.getGameMap().getName());
+            statement.setInt(2, x);
+            statement.setInt(3, y);
+            statement.setString(4, cell.getType().name());
+
+            if (cell.getActor() != null) {
+                int actorId = actorDaoJdbc.saveActor(cell.getActor());
+                statement.setInt(5, actorId);
+            } else {
+                statement.setNull(5, Types.INTEGER);
+            }
+
+            if (cell.getItem() != null) {
+                int itemId = itemDaoJdbc.saveItem(cell.getItem());
+                statement.setInt(6, itemId);
+            } else {
+                statement.setNull(6, Types.INTEGER);
+            }
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while saving cell", e);
+        }
+    }
+
+
+
 }

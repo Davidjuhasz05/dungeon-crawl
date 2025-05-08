@@ -55,4 +55,23 @@ public class ItemDaoJdbc {
             throw new SQLException("Could not load item " + itemId);
         }
     }
+
+    public int saveItem(Item item) {
+        try (Connection conn = dataSource.connect()) {
+            PreparedStatement stmt = conn.prepareStatement(
+                    "INSERT INTO item (item) VALUES (?) RETURNING id"
+            );
+            stmt.setString(1, item.getName());
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id");
+            } else {
+                throw new SQLException("Failed to insert item");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while saving item", e);
+        }
+    }
+
 }

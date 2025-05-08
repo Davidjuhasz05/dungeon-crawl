@@ -27,10 +27,12 @@ public class GameLogic {
     private int currentMapIndex = 1;
     private final Random random = new Random();
     private final GameDatabaseDataSource datasource = new GameDatabaseDataSource();
-    private final CellDaoJdbc cellDaoJdbc = new CellDaoJdbc(datasource);
     private final ItemDaoJdbc itemDaoJdbc = new ItemDaoJdbc(datasource);
     private final ActorDaoJdbc actorDaoJdbc = new ActorDaoJdbc(datasource, itemDaoJdbc);
+    private final CellDaoJdbc cellDaoJdbc = new CellDaoJdbc(datasource, actorDaoJdbc, itemDaoJdbc);
+
     private final DatabaseLoader loader = new DatabaseLoader(cellDaoJdbc, actorDaoJdbc, itemDaoJdbc);
+    private final DatabaseSaver saver = new DatabaseSaver(cellDaoJdbc, actorDaoJdbc, itemDaoJdbc);
 
     public GameLogic() {
         this.map = MapLoader.loadMap(mapPaths.get(currentMapIndex++));
@@ -95,6 +97,15 @@ public class GameLogic {
         }
 
     }
+
+    public void saveGame() {
+        try {
+            saver.saveMap(map);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
     public Cell getCell(int x, int y) {
         return map.getCell(x, y);
