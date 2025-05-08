@@ -1,24 +1,16 @@
-package com.codecool.dungeoncrawl.logic;
+package com.codecool.dungeoncrawl.database;
 
-import com.codecool.dungeoncrawl.data.Cell;
-import com.codecool.dungeoncrawl.data.actors.Actor;
-import com.codecool.dungeoncrawl.data.actors.Player;
-import com.codecool.dungeoncrawl.data.actors.Skeleton;
-import com.codecool.dungeoncrawl.data.item.Item;
-import com.codecool.dungeoncrawl.data.item.weapon.Weapon;
-
-import javax.sql.DataSource;
 import java.sql.*;
 
 public class CellDaoJdbc {
-    private final DataSource dataSource;
+    private final GameDatabaseDataSource dataSource;
 
-    public CellDaoJdbc(final DataSource dataSource) {
+    public CellDaoJdbc(GameDatabaseDataSource dataSource) {
         this.dataSource = dataSource;
     }
 
     public int getMapWidth() throws SQLException {
-        try(Connection conn = dataSource.getConnection()){
+        try(Connection conn = dataSource.connect()){
             return conn.createStatement()
                     .executeQuery("select max(x) from map")
                     .getInt(1);
@@ -28,7 +20,7 @@ public class CellDaoJdbc {
     }
 
     public int getMapHeight() throws SQLException {
-        try(Connection conn = dataSource.getConnection()){
+        try(Connection conn = dataSource.connect()){
             return conn.createStatement()
                     .executeQuery("select max(y) from map")
                     .getInt(1);
@@ -38,7 +30,7 @@ public class CellDaoJdbc {
     }
 
     public String getMapName() throws SQLException {
-        try(Connection conn = dataSource.getConnection()){
+        try(Connection conn = dataSource.connect()){
             return conn.createStatement()
                     .executeQuery("select mapname from map limit 1")
                     .getString(1);
@@ -48,7 +40,7 @@ public class CellDaoJdbc {
     }
 
     public ResultSet getCellByCoordinates(int x, int y) throws SQLException {
-        try(Connection conn = dataSource.getConnection()){
+        try(Connection conn = dataSource.connect()){
             PreparedStatement statement = conn.prepareStatement("select cellType, actor, item from map where map.x = ? and map.y = ?");
             statement.setInt(1, x);
             statement.setInt(2, y);
@@ -57,15 +49,4 @@ public class CellDaoJdbc {
             throw new SQLException("Could not get cell");
         }
     }
-
-    //Save
-
-    public void saveCell(Cell cell){
-
-
-    }
-
-
-
-
 }

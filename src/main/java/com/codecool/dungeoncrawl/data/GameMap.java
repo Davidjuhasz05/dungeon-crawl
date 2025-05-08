@@ -2,7 +2,6 @@ package com.codecool.dungeoncrawl.data;
 
 import com.codecool.dungeoncrawl.data.actors.Enemy;
 import com.codecool.dungeoncrawl.data.actors.Player;
-import com.codecool.dungeoncrawl.data.actors.Skeleton;
 import com.codecool.dungeoncrawl.data.item.Torch;
 
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class GameMap {
         return name;
     }
 
-    public void addEnemy(Skeleton enemy) {
+    public void addEnemy(Enemy enemy) {
         this.enemies.add(enemy);
     }
 
