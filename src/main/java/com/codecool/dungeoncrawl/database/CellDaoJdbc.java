@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.database;
 
 import com.codecool.dungeoncrawl.data.Cell;
+import com.codecool.dungeoncrawl.data.GameMap;
 
 import java.sql.*;
 
@@ -56,8 +57,22 @@ public class CellDaoJdbc {
         }
     }
 
-    public void saveCell(Cell cell, int x, int y) {
+    public void saveCells (GameMap map) throws SQLException{
+
         try (Connection conn = dataSource.connect()) {
+            for (int y = 0; y < map.getHeight(); y++) {
+                for (int x = 0; x < map.getWidth(); x++) {
+                    Cell cell = map.getCell(x, y);
+                    saveCell(conn, cell, x, y);
+                }
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Error while saving cell", e);
+        }
+    }
+
+    public void saveCell(Connection conn, Cell cell, int x, int y) throws SQLException {
+
             PreparedStatement statement = conn.prepareStatement(
                     "INSERT INTO map (mapName, x, y, cellType, actor, item) VALUES (?, ?, ?, ?, ?, ?)"
             );
@@ -83,9 +98,6 @@ public class CellDaoJdbc {
 
             statement.executeUpdate();
 
-        } catch (SQLException e) {
-            throw new RuntimeException("Error while saving cell", e);
-        }
     }
 
 

@@ -6,6 +6,9 @@ import com.codecool.dungeoncrawl.database.ActorDaoJdbc;
 import com.codecool.dungeoncrawl.database.CellDaoJdbc;
 import com.codecool.dungeoncrawl.database.ItemDaoJdbc;
 
+import java.nio.channels.ConnectionPendingException;
+import java.sql.SQLException;
+
 public class DatabaseSaver {
     private final CellDaoJdbc cellDao;
     private final ActorDaoJdbc actorDao;
@@ -18,11 +21,10 @@ public class DatabaseSaver {
     }
 
     public void saveMap(GameMap map) {
-        for (int y = 0; y < map.getHeight(); y++) {
-            for (int x = 0; x < map.getWidth(); x++) {
-                Cell cell = map.getCell(x, y);
-                cellDao.saveCell(cell, x, y);
-            }
+        try {
+            cellDao.saveCells(map);
+        } catch (SQLException e) {
+            System.out.println("Saving failed" + e.getMessage());
         }
     }
 }
