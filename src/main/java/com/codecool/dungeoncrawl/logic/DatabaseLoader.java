@@ -3,6 +3,8 @@ package com.codecool.dungeoncrawl.logic;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.GameMap;
+import com.codecool.dungeoncrawl.data.actors.Actor;
+import com.codecool.dungeoncrawl.data.actors.Enemy;
 import com.codecool.dungeoncrawl.data.actors.Player;
 
 import java.sql.ResultSet;
@@ -44,14 +46,19 @@ public class DatabaseLoader {
                 cell.setType(CellType.valueOf(cellType));
                 if(actorId != null){
                     try{
-                        cellDao.loadActor(cell, actorId);
+                        Actor actor = cellDao.loadActor(cell, actorId);
+                        if(actor instanceof Player){
+                            map.setPlayer((Player) actor);
+                        } else{
+                            map.addEnemy((Enemy) actor);
+                        }
                     } catch (SQLException e){
                         throw new SQLException("Could not load actor from database");
                     }
                 }
                 if(itemId != null){
                     try{
-                        cellDao.loadItem(itemId);
+                        cellDao.loadItem(itemId, cell);
                     } catch (SQLException e) {
                         throw new SQLException("Could not load item from database");
                     }

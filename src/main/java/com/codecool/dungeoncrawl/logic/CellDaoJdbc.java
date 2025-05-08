@@ -4,7 +4,11 @@ import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.actors.Actor;
 import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.actors.Skeleton;
+import com.codecool.dungeoncrawl.data.item.Armor;
+import com.codecool.dungeoncrawl.data.item.HealthPotion;
 import com.codecool.dungeoncrawl.data.item.Item;
+import com.codecool.dungeoncrawl.data.item.Key;
+import com.codecool.dungeoncrawl.data.item.weapon.Sword;
 import com.codecool.dungeoncrawl.data.item.weapon.Weapon;
 
 import javax.sql.DataSource;
@@ -59,8 +63,8 @@ public class CellDaoJdbc {
     }
 
     public Actor loadActor(Cell cell, String actorId) throws SQLException {
-        Actor actor;
         try(Connection conn = dataSource.getConnection()){
+            Actor actor;
             PreparedStatement statement = conn.prepareStatement("select health, actorType, inventory, weapon from actor where actor.actor_id = ?");
             statement.setString(1, actorId);
             ResultSet results = statement.executeQuery();
@@ -86,27 +90,53 @@ public class CellDaoJdbc {
                 loadInventory((Player) actor, inventory);
             }
             if(weapon != null && actor instanceof Player){
-                Item loadedWeapon = loadItem(weapon);
+                Item loadedWeapon = loadItem(weapon, actor.getCell());
+                loadedWeapon.setCell(null);
+                actor.getCell().setItem(null);
                 if(loadedWeapon instanceof Weapon){
                     ((Player) actor).addWeapon((Weapon) loadedWeapon);
                 }
             }
+            return actor;
         } catch(SQLException e) {
             throw new SQLException("Could not load actor " + actorId);
         }
-        return actor;
     }
 
     private void loadInventory(Player player, Array inventory) throws SQLException {
         String[] inventoryItemIds = (String[]) inventory.getArray();
         for(String itemId : inventoryItemIds){
-            player.addToInventory(loadItem(itemId));
+            Item loadedItem = loadItem(itemId, player.getCell());
+            loadedItem.setCell(null);
+            player.getCell().setItem(null);
+            player.addToInventory(loadedItem);
         }
     }
 
-    public Item loadItem(String itemId) throws SQLException {
+    public Item loadItem(String itemId, Cell cell) throws SQLException {
         try(Connection conn = dataSource.getConnection()){
-            
+            Item loadedItem;
+            PreparedStatement statement = conn.prepareStatement("select item from item where itemId = ?");
+            statement.setString(1, itemId);
+            ResultSet results = statement.executeQuery();
+            String itemType = results.getString("item");
+            switch(itemType){
+                case "sword":
+                    loadedItem = new Sword(cell);
+                    break;
+                case "armor":
+                    loadedItem = new Armor(cell);
+                    break;
+                case "healthPotion":
+                    loadedItem = new HealthPotion(cell);
+                    break;
+                case "key":
+                    loadedItem = new Key(cell);
+                    break;
+                default:
+                    loadedItem = null;
+            }
+            return loadedItem;
         } catch(SQLException e) {
             throw new SQLException("Could not load item " + itemId);
         }
