@@ -50,9 +50,6 @@ public class MapLoader {
             case ',':
                 cell.setType(CellType.FLOOR2);
                 break;
-            case '_':
-                cell.setType(CellType.FLOOR3);
-                break;
             case 's':
                 cell.setType(CellType.FLOOR);
                 map.addEnemy(new Skeleton(cell));
@@ -107,12 +104,40 @@ public class MapLoader {
             case '-':
                 cell.setType(CellType.GRASS);
                 break;
+            case ':':
+                cell.setType(CellType.TALL_GRASS);
+                break;
             case 'o':
                 int randomNumber = RANDOM.nextInt(2);
                 cell.setType(randomNumber == 0 ? CellType.CANOPY1 : CellType.CANOPY2);
                 break;
             case 'i':
                 cell.setType(CellType.TRUNK1);
+                break;
+            case '|':
+                cell.setType(CellType.FOREST_WALL_LEFT);
+                break;
+            case '/':
+                cell.setType(CellType.FOREST_WALL_RIGHT);
+                break;
+            case '{':
+                cell.setType(CellType.FOREST_WALL_TOP);
+                break;
+            case '}':
+                cell.setType(CellType.FOREST_WALL_BOTTOM);
+                break;
+            case '<':
+                cell.setType(CellType.FOREST_WALL_TOP_LEFT);
+                break;
+            case '>':
+                cell.setType(CellType.FOREST_WALL_CORNER_1);
+                break;
+            case '[':
+                cell.setType(CellType.FOREST_WALL_CORNER_2);
+                break;
+            case ']':
+                cell.setType(CellType.FOREST_WALL_BOTTOM_RIGHT);
+                break;
             default:
                 if(c >= 'A' && c <= 'Z') {
                     cell.setType(CellType.valueOf(String.valueOf(c)));
