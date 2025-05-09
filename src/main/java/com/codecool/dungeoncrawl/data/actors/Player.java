@@ -122,6 +122,15 @@ public class Player extends Actor {
         return false;
     }
 
+    public void removeKey() {
+        for(Item item : inventory) {
+            if(item.getItemType().equals(ItemType.ACCESS)) {
+                inventory.remove(item);
+                break;
+            }
+        }
+    }
+
     @Override
     public void attack(Actor target) {
         int attackDamage = damage;

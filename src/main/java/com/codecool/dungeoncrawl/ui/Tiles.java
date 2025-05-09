@@ -25,6 +25,14 @@ public class Tiles {
     static {
         tileMap.put("empty", new Tile(0, 0));
         tileMap.put("wall", new Tile(10, 17));
+        tileMap.put("forestWallLeft", new Tile(18, 1));
+        tileMap.put("forestWallRight", new Tile(20, 1));
+        tileMap.put("forestWallTop", new Tile(19, 0));
+        tileMap.put("forestWallBottom", new Tile(19, 2));
+        tileMap.put("forestWallTopLeft", new Tile(18, 0));
+        tileMap.put("forestWallCorner1", new Tile(19, 4));
+        tileMap.put("forestWallCorner2", new Tile(18, 3));
+        tileMap.put("forestWallBottomRight", new Tile(20, 2));
         tileMap.put("floor", new Tile(2, 0));
         tileMap.put("floor2", new Tile(3, 0));
         tileMap.put("player", new Tile(27, 0));
@@ -35,11 +43,16 @@ public class Tiles {
         tileMap.put("armor", new Tile(3, 23));
         tileMap.put("key", new Tile(18, 23));
         tileMap.put("potion", new Tile(17, 25));
-        tileMap.put("door", new Tile(15, 16));
+        tileMap.put("door", new Tile(10, 9));
         tileMap.put("torch", new Tile(4, 15));
         tileMap.put("quit", new Tile(22, 23));
         tileMap.put("animalSkull", new Tile(1, 15));
+        tileMap.put("skeletonSkull", new Tile(0, 15));
         tileMap.put("grass", new Tile(5, 0));
+        tileMap.put("tallGrass", new Tile(0, 2));
+        tileMap.put("trunk1", new Tile(19, 6));
+        tileMap.put("canopy1", new Tile(20, 5));
+        tileMap.put("canopy2", new Tile(19, 5));
         tileMap.put("a", new Tile(19, 30)); tileMap.put("b", new Tile(20, 30)); tileMap.put("c", new Tile(21, 30));
         tileMap.put("d", new Tile(22, 30)); tileMap.put("e", new Tile(23, 30)); tileMap.put("f", new Tile(24, 30));
         tileMap.put("g", new Tile(25, 30)); tileMap.put("h", new Tile(26, 30)); tileMap.put("i", new Tile(27, 30));

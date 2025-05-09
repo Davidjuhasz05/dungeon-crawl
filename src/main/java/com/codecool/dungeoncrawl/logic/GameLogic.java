@@ -6,7 +6,6 @@ import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.actors.MoveResult;
 import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.item.Item;
-
 import java.sql.SQLException;
 import java.util.List;
 import com.codecool.dungeoncrawl.data.actors.enemies.Enemy;
@@ -23,7 +22,7 @@ import java.util.stream.Collectors;
 public class GameLogic {
     private GameMap map;
     private static final int MAX_STEP_RETRIES = 10;
-    private final List<String> mapPaths = List.of("/gameover.txt","/dungeon.txt", "/dungeon2.txt");
+    private final List<String> mapPaths = List.of("/gameover.txt","/dungeon.txt", "/dungeon2.txt", "/forest.txt");
     private int currentMapIndex = 0;
     private final Random random = new Random();
     private final GameDatabaseDataSource datasource = new GameDatabaseDataSource();
@@ -138,8 +137,7 @@ public class GameLogic {
         return currentMapIndex;
     }
 
-    public void setNextMap() {
-        Player currentPlayer = map.getPlayer();
+    public void setNextMap(Player currentPlayer) {
         this.map = MapLoader.loadMap(mapPaths.get(++currentMapIndex));
         Player newPlayer = map.getPlayer();
         currentPlayer.setCell(newPlayer.getCell());
@@ -152,10 +150,24 @@ public class GameLogic {
     public void handleNextTurn() {
         Player player = map.getPlayer();
         Cell playerPos = player.getCell();
-        if(playerPos.getType().equals(CellType.DOOR) && player.hasKey()) {
-            setNextMap();
-        } else {
-            handleEnemiesTurn();
+
+        switch(playerPos.getType()) {
+            case DOOR:
+                if(player.hasKey()) {
+                    setNextMap(player);
+                    player.removeKey();
+                }
+                break;
+            case RETRY:
+                currentMapIndex = 0;
+                setNextMap(new Player(playerPos));
+                break;
+            case QUIT:
+                System.exit(0);
+                break;
+            default:
+                handleEnemiesTurn();
+                break;
         }
     }
 
