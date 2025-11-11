@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class GameLogic {
     private GameMap map;
     private static final int MAX_STEP_RETRIES = 10;
-    private final List<String> mapPaths = List.of("/gameover.txt","/dungeon.txt", "/dungeon2.txt", "/forest.txt");
+    private final List<String> mapPaths = List.of("/gameover.txt","/dungeon.txt", "/dungeon2.txt", "/forest.txt", "/win.txt");
     private int currentMapIndex = 0;
     private final Random random = new Random();
     private final GameDatabaseDataSource datasource = new GameDatabaseDataSource();
@@ -145,6 +145,12 @@ public class GameLogic {
         newPlayer.setCell(null);
         currentPlayer.getCell().setActor(currentPlayer);
         map.setPlayer(currentPlayer);
+    }
+
+    public void setWinningMap() {
+        if(currentMapIndex == 3 && map.getPlayer().getCell().getY() == 0) {
+            setNextMap(map.getPlayer());
+        }
     }
 
     public void handleNextTurn() {

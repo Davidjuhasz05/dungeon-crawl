@@ -3,10 +3,7 @@ package com.codecool.dungeoncrawl.ui;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.logic.GameLogic;
 import com.codecool.dungeoncrawl.ui.elements.MainStage;
-import com.codecool.dungeoncrawl.ui.keyeventhandler.DirectionsKeyHandler;
-import com.codecool.dungeoncrawl.ui.keyeventhandler.KeyHandler;
-import com.codecool.dungeoncrawl.ui.keyeventhandler.Save;
-import com.codecool.dungeoncrawl.ui.keyeventhandler.Load;
+import com.codecool.dungeoncrawl.ui.keyeventhandler.*;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -45,6 +42,7 @@ public class UI {
 
     private void onKeyPressed(KeyEvent keyEvent) {
         for (KeyHandler keyHandler : keyHandlers) {
+            if(keyHandler instanceof Up) logic.setWinningMap();
             boolean actionHappened = keyHandler.perform(keyEvent, logic.getMap());
             if(actionHappened && keyHandler instanceof DirectionsKeyHandler){
                 logic.handleNextTurn();
@@ -65,7 +63,7 @@ public class UI {
         for (int x = 0; x < logic.getMapWidth(); x++) {
             for (int y = 0; y < logic.getMapHeight(); y++) {
                 Cell cell = logic.getCell(x, y);
-                if(logic.getCurrentMapIndex() != 0 && logic.getCurrentMapIndex() != 3) {
+                if(logic.getCurrentMapIndex() != 0 && logic.getCurrentMapIndex() != 3 && logic.getCurrentMapIndex() != 4) {
                     if(logic.isVisibleForPlayer(cell) || logic.isVisibleForTorch(cell)) {
                         drawTile(cell, x, y);
                     }
