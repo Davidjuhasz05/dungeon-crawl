@@ -31,7 +31,7 @@ public class GameLogic {
     private final CellDaoJdbc cellDaoJdbc = new CellDaoJdbc(datasource, actorDaoJdbc, itemDaoJdbc);
 
     private final DatabaseLoader loader = new DatabaseLoader(cellDaoJdbc, actorDaoJdbc, itemDaoJdbc);
-    private final DatabaseSaver saver = new DatabaseSaver(cellDaoJdbc, actorDaoJdbc, itemDaoJdbc);
+    private final DatabaseSaver saver = new DatabaseSaver(cellDaoJdbc);
 
     public GameLogic() {
         this.map = MapLoader.loadMap(mapPaths.get(++currentMapIndex));

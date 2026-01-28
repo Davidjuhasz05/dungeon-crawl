@@ -16,10 +16,9 @@ public abstract class Enemy extends Actor {
 
     @Override
     public MoveResult evaluateMove(int dx, int dy) {
-        Cell nextCell;
-        try {
-            nextCell = this.getCell().getNeighbor(dx, dy);
-        } catch(ArrayIndexOutOfBoundsException e) {
+        Cell nextCell = this.getCell().getNeighbor(dx, dy);
+
+        if(nextCell == null) {
             return MoveResult.BLOCKED;
         }
 

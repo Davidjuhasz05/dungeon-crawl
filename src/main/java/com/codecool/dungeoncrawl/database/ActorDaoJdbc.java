@@ -148,7 +148,7 @@ public class ActorDaoJdbc {
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new SQLException("couldnt cleaer actor");
+            throw new SQLException("Could not clear actor");
         }
     }
 }

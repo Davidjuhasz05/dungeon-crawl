@@ -85,7 +85,7 @@ public class ItemDaoJdbc {
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new SQLException("couldnt cleaer map");
+            throw new SQLException("Could not clear map");
         }
     }
 }

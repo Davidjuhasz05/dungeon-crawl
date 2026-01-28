@@ -5,12 +5,10 @@ import org.postgresql.ds.PGSimpleDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-
-
 public class GameDatabaseDataSource {
-    private String dbName = System.getenv("dbName");
-    private String dbUser = System.getenv("dbUserName");
-    private String userDbPassword = System.getenv("dbPassword");
+    private final String dbName = "dungeon_crawl";
+    private final String dbUser = "postgres";
+    private final String userDbPassword = "psql";
 
     private PGSimpleDataSource dataSource;
 
@@ -23,6 +21,8 @@ public class GameDatabaseDataSource {
         dataSource.setDatabaseName(dbName);
         dataSource.setUser(dbUser);
         dataSource.setPassword(userDbPassword);
+        dataSource.setServerNames(new String[]{"localhost"});
+        dataSource.setPortNumbers(new int[]{5433});
     }
 
     public Connection connect() throws SQLException {
