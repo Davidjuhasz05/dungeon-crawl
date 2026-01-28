@@ -70,38 +70,47 @@ The game was built using the JavaFX framework. It currently features 3 Maps, 3 E
 
 ### Prerequisites
 
-  * An IDE installed ([IntelliJ IDEA](https://www.jetbrains.com/idea) recommended)
-  * [PostgreSQL][PostgreSQL-url] installed
+  * [Java][Java-url] 17+ installed
+  * [Docker][Docker-url] installed
 
 ### How to Play
 
 #### 1. Clone the Repository
-```bash
-git clone https://github.com/Davidjuhasz05/dungeon-crawl.git
-cd dungeon-crawl
-```
 
-#### 2. Configure PostgreSQL
-
-  * Create a new database and give it any name you want
-  * Connect to that database and run the `createSqlTables.sql` script in `src > main > resources` to create the necessary tables for the database
-
-#### 3. Configure Environment Variables
-
-  * In your IDE, set the following environment variables for the App:
-  ```
-  dbName: <name-of-your-database>
-  dbPassword: <your-psql-password>
-  dbUsername: <your-psql-username>
+  ```bash
+  git clone https://github.com/Davidjuhasz05/dungeon-crawl.git
+  cd dungeon-crawl
   ```
 
-#### 4. Start the Game and Have Fun!
+#### 2. Start PostgreSQL Docker Container
+
+  ```bash
+  docker compose up -d
+  ```
+
+#### 3. Download and Start the Game
+
+  * Go to the [Releases][Releases-url] page, download `dungeon-crawl-0.3.jar` into the project root, then run:
+  
+  ```bash
+  java -jar dungeon-crawl-0.3.jar
+  ```
+
+  * **Have Fun!**
+
+#### 4. Stop the Game
+
+  * After you are done, just close the game window and run:
+
+  ```bash
+  docker compose down
+  ```
 
 ### Controls
 
-  * Movement: Arrow keys
-  * Save Game: `S`
-  * Load Game: `L`
+  * **Movement:** Arrow keys
+  * **Save Game:** `S`
+  * **Load Game:** `L`
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -152,3 +161,4 @@ cd dungeon-crawl
 [Helm-url]: https://helm.sh
 [Helm-install-url]: https://helm.sh/docs/intro/install
 [AWS-CLI-url]: https://aws.amazon.com/cli
+[Releases-url]: https://github.com/Davidjuhasz05/dungeon-crawl/releases
