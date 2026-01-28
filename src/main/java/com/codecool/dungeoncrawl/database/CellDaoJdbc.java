@@ -116,7 +116,7 @@ public class CellDaoJdbc {
             actorDaoJdbc.clearActors();
             itemDaoJdbc.clearItems();
         } catch(SQLException e) {
-            throw new SQLException("could't clear tables");
+            throw new SQLException("Could not clear tables");
         }
     }
 }

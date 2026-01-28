@@ -21,6 +21,8 @@ public class GameDatabaseDataSource {
         dataSource.setDatabaseName(dbName);
         dataSource.setUser(dbUser);
         dataSource.setPassword(userDbPassword);
+        dataSource.setServerNames(new String[]{"localhost"});
+        dataSource.setPortNumbers(new int[]{5433});
     }
 
     public Connection connect() throws SQLException {
